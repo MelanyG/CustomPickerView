@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MHCollectionCell">
+            <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="TestCell" translatesAutoresizingMaskIntoConstraints="NO" id="cLl-mk-lTe">
+                        <rect key="frame" x="5" y="5" width="196" height="128"/>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.81937765235241122" green="0.94715495072288414" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cLl-mk-lTe" secondAttribute="bottom" constant="5" id="2Yb-tN-Y98"/>
+                <constraint firstItem="cLl-mk-lTe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="GiW-sV-7fS"/>
+                <constraint firstItem="cLl-mk-lTe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="SrN-29-DN8"/>
+                <constraint firstAttribute="trailing" secondItem="cLl-mk-lTe" secondAttribute="trailing" constant="5" id="wnD-G6-vSJ"/>
+            </constraints>
+            <size key="customSize" width="206" height="138"/>
+            <connections>
+                <outlet property="imageContainer" destination="cLl-mk-lTe" id="XLc-FD-Pe4"/>
+            </connections>
+            <point key="canvasLocation" x="467" y="222"/>
+        </collectionViewCell>
+    </objects>
+</document>

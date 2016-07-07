@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MainVC.h"
+#import "Downloader.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    MainVC *vc = [MainVC new];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = navController;
+  //  NSArray *array = [NSArray arrayWithObjects:@"https://pixabay.com/en/cat-animal-cat-s-eyes-eyes-pet-1285634/",@"https://pixabay.com/en/cat-animal-pet-cats-close-up-300572/", @"http://mrmen.wikia.com/wiki/Mr._Small?file=Mr._Small_TMMS.jpg", @"http://mrmen.wikia.com/wiki/Mr._Small?file=Warner_Home_Video_1986.png", nil];
+  //  for(int i=0; i<4; i++) {
+  //      [[Downloader sharedInstance] downloadImages:array[i]];
+  //  }
     return YES;
 }
 

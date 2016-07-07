@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MainVC.h
 //  CustomPickerView
 //
 //  Created by Melaniia Hulianovych on 7/6/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface MainVC : UIViewController
 
 @end
-
