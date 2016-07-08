@@ -31,6 +31,9 @@
     [_webView loadRequest:urlRequest];
     
     _scrollVC = [[MHScrollViewC alloc]initWithView:_scrollView];
+    if(_scrollVC.scrollView.pager.hidden) {
+        self.heightScrollViewConstraint.constant = 60.f;
+    }
     //  [self.scrollView bringSubviewToFront:_scrollView];
     //self.scrollVC = [MHScrollVC new];
     

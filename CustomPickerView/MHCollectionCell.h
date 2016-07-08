@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageContainer;
 @property (nonatomic) BOOL splitterWasSet;
+@property (weak, nonatomic) IBOutlet UIView *splitter;
+
 
 - (void)setSplitter;
 @end

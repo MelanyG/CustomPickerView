@@ -7,6 +7,7 @@
 //
 
 #import "MHCollectionViewLayout.h"
+#import "MHConfigure.h"
 
 static NSString * const MHCollectionViewLayoutCellKind = @"TestCell";
 static NSUInteger const RotationCount = 32;
@@ -55,8 +56,10 @@ SwipeViewAlignment;
     self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
     self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, 50.0f);
     self.interItemSpacingY = 12.0f;
-    self.numberOfColumns = 3;
-    self.maxElements = 3;
+    //self.numberOfColumns = 3;
+    [self getMaxNumberOfElements];
+    //self.maxElements = [MHConfigure sharedConfiguration].;
+    self.numberOfElemets = [MHConfigure sharedConfiguration].numberOfElements;
     // create rotations at load so that they are consistent during prepareLayout
     NSMutableArray *rotations = [NSMutableArray arrayWithCapacity:RotationCount];
     
@@ -101,10 +104,10 @@ SwipeViewAlignment;
     self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
     [self getMaxNumberOfElements];
     NSInteger dimension = [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait ? [UIScreen mainScreen].bounds.size.width : [UIScreen mainScreen].bounds.size.height;
-    NSInteger width = dimension / self.maxElements - 10.f;
+    NSInteger width = dimension / self.maxElements - 0.f;
     if(self.numberOfElemets > self.maxElements) {
         self.itemSize = CGSizeMake(width, 50.f);
-        self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
+        self.itemInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
     } else  {
         self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, 50.f);
        // self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
@@ -135,10 +138,10 @@ SwipeViewAlignment;
 - (CGRect)frameForAlbumPhotoAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    _spacingX = 10.f;//([[UIScreen mainScreen] bounds].size.width - self.maxElements * self.itemSize.width) / 3;
+    _spacingX = 0.f;//([[UIScreen mainScreen] bounds].size.width - self.maxElements * self.itemSize.width) / 3;
     
-    CGFloat originX = floorf(_spacingX/2  + (self.itemSize.width + _spacingX) * indexPath.item);
-    
+  //  CGFloat originX = floorf(_spacingX/2  + (self.itemSize.width + _spacingX) * indexPath.item);
+    CGFloat originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left;
     CGFloat originY =  self.itemInsets.bottom;
     //floor(self.itemInsets.top +
     //      (self.itemSize.height + self.interItemSpacingY) * row);
@@ -179,7 +182,7 @@ SwipeViewAlignment;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         self.alignment = SwipeViewAlignmentCenter;
-        self.maxElements = 3;
+        self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPhone];
     }
     else
     {
@@ -187,14 +190,14 @@ SwipeViewAlignment;
         if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
         {
             self.alignment = SwipeViewAlignmentCenter;
-            self.maxElements = 4;
+            self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadPortrait];
             
         }
         else
         {
             self.alignment = SwipeViewAlignmentEdge;
             //self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
-            self.maxElements = 5;
+            self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadLandscape];
             
         }
     }

@@ -21,8 +21,8 @@
 @property (nonatomic, retain, readonly) UIColor *streamPickerSplitterColor;
 @property (nonatomic, assign, readonly) NSInteger streamPickerSplitterWidth;
 @property (nonatomic, assign, readonly) NSInteger spaceBetweenStreamPickerAndContentTable;
-
-
+@property (assign, nonatomic) NSInteger numberOfElements;
+@property (assign, nonatomic) NSInteger maxOfElements;
 
 + (MHConfigure *)sharedConfiguration;
 
