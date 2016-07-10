@@ -40,6 +40,7 @@
          name:UIDeviceOrientationDidChangeNotification
          object:[UIDevice currentDevice]];
         [self removePageControl];
+        
 
     }
     return self;
@@ -48,8 +49,17 @@
 
 - (void) orientationChanged:(NSNotification *)note
 {
+    UIDeviceOrientation interfaceOrientation = [[note object] orientation];
+    //DLog(@"val is %i", interfaceOrientation);
+    if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait) {
+        
+    }
+    [self.scrollView.customLayout setup];
     [self.scrollView.collectionView reloadData];
-    
+    [self removePageControl];
+    if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdatePageControl)]) {
+        [_delegate shouldUpdatePageControl];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -98,19 +108,18 @@
     cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
 }
 
-- (void)updateDataSource: (NSIndexPath *)indexPath {
-    MHCollectionCell *newCell = _swipeItems[[NSString stringWithFormat:@"%li", indexPath.item]];
-    newCell.imageContainer.image = [UIImage imageNamed:@"cat"];
-    
-}
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSArray *visibleItems = [self.scrollView.collectionView indexPathsForVisibleItems];
     NSInteger size = [visibleItems count];
-    NSLog(@"Item: %ld", (long)[(NSIndexPath *)visibleItems[size - 1]item]);
-    NSInteger visibleElement =[(NSIndexPath *)visibleItems[size - 1]item] + 1;
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"item"
+                                                                 ascending:YES];
+    NSArray *results = [visibleItems sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+
+    NSLog(@"Item: %ld", (long)[(NSIndexPath *)results[size - 1]item]);
+    NSInteger visibleElement =[(NSIndexPath *)results[size - 1]item] + 1;
     CGFloat allPages = visibleElement /self.scrollView.customLayout.maxElements;
     CGFloat decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
     if (decimalPart < self.scrollView.customLayout.maxElements && decimalPart != 0) {
@@ -128,6 +137,7 @@
     if(self.scrollView.customLayout.maxElements >= self.scrollView.customLayout.numberOfElemets) {
         self.scrollView.pager.hidden = YES;
     } else {
+         self.scrollView.pager.hidden = NO;
         self.scrollView.pager.hidesForSinglePage = YES;
         self.scrollView.pager.pageIndicatorTintColor = [MHConfigure sharedConfiguration].inactivePageDotColor;
         self.scrollView.pager.currentPageIndicatorTintColor = [MHConfigure sharedConfiguration].activePageDotColor;

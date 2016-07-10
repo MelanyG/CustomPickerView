@@ -43,22 +43,15 @@
 {
     if(index == 0) {
         self.splitter.hidden = YES;
-
         return;
     }
-    if ((!self.splitterWasSet) && [MHConfigure sharedConfiguration].streamPickerDisplaySplitters) {
+    if ([MHConfigure sharedConfiguration].streamPickerDisplaySplitters) {
         CGSize mainViewSize = self.bounds.size;
         NSInteger borderWidth = [MHConfigure sharedConfiguration].streamPickerSplitterWidth;
         UIColor *borderColor = [MHConfigure sharedConfiguration].streamPickerSplitterColor;
-      // self.splitter.frame =CGRectMake(0, 0, borderWidth, mainViewSize.height);
         self.splitter.hidden = NO;
         self.splitter.backgroundColor = [UIColor redColor];
-        
-        // for bonus points, set the views' autoresizing mask so they'll stay with the edges:
-      //  self.splitter.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
-        
-        //[self addSubview:self.splitter];
-        self.splitterWasSet = YES;
+
     }
 }
 
@@ -66,7 +59,7 @@
 {
     [super prepareForReuse];
     
-    self.imageContainer.image = nil;
+   // self.imageContainer.image = nil;
 }
 
 

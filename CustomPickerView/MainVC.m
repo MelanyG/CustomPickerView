@@ -31,14 +31,9 @@
     [_webView loadRequest:urlRequest];
     
     _scrollVC = [[MHScrollViewC alloc]initWithView:_scrollView];
-    if(_scrollVC.scrollView.pager.hidden) {
-        self.heightScrollViewConstraint.constant = 60.f;
-    }
+    [self shouldUpdatePageControl];
     _scrollVC.delegate = self;
-    //  [self.scrollView bringSubviewToFront:_scrollView];
-    //self.scrollVC = [MHScrollVC new];
-    
-    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,6 +46,15 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
+}
+
+- (void)shouldUpdatePageControl {
+    if(_scrollVC.scrollView.pager.hidden) {
+        self.heightScrollViewConstraint.constant = 60.f;
+    } else {
+        self.heightScrollViewConstraint.constant = 80.f;
+    }
+    [self.view setNeedsUpdateConstraints];
 }
 /*
  #pragma mark - Navigation

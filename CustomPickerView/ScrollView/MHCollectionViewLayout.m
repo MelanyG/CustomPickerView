@@ -81,14 +81,14 @@ SwipeViewAlignment;
 //    self.rotations = rotations;
 }
 
-#pragma mark - Layout
-
-- (CATransform3D)transformForAlbumPhotoAtIndex:(NSIndexPath *)indexPath
-{
-    
-    NSInteger offset = (indexPath.section * RotationStride + indexPath.item);
-    return [self.rotations[offset % RotationCount] CATransform3DValue];
-}
+//#pragma mark - Layout
+//
+//- (CATransform3D)transformForAlbumPhotoAtIndex:(NSIndexPath *)indexPath
+//{
+//    
+//    NSInteger offset = (indexPath.section * RotationStride + indexPath.item);
+//    return [self.rotations[offset % RotationCount] CATransform3DValue];
+//}
 
 - (void)prepareLayout
 {
@@ -103,11 +103,12 @@ SwipeViewAlignment;
     //
     self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
     [self getMaxNumberOfElements];
-    NSInteger dimension = [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait ? [UIScreen mainScreen].bounds.size.width : [UIScreen mainScreen].bounds.size.height;
+    NSInteger dimension = [self getDimentionToGetWidth];
     NSInteger width = dimension / self.maxElements - 0.f;
-    if(self.numberOfElemets > self.maxElements) {
-        self.itemSize = CGSizeMake(width, 50.f);
-        self.itemInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    if(self.numberOfElemets >=  self.maxElements) {
+        self.itemSize = CGSizeMake(width, 60.f);
+        CGFloat originX = ([UIScreen mainScreen].bounds.size.width - width * self.maxElements) / 2;
+        self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 0.0f, 0.0f);
     } else  {
         self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, 50.f);
        // self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
@@ -199,6 +200,27 @@ SwipeViewAlignment;
             //self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
             self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadLandscape];
             
+        }
+    }
+}
+
+- (NSInteger)getDimentionToGetWidth
+{
+    //  self.maxElements = availableNumberOfItems;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+     return [UIScreen mainScreen].bounds.size.width;
+    }
+    else
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
+        {
+            return [UIScreen mainScreen].bounds.size.width;
+        }
+        else
+        {
+          return [UIScreen mainScreen].bounds.size.height;
         }
     }
 }

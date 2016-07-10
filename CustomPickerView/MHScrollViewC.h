@@ -12,6 +12,7 @@
 @protocol MHScrollVCProtocol <NSObject>
 
 - (void)didSelectCell:(NSInteger)selectedCell;
+- (void)shouldUpdatePageControl;
 
 @end
 

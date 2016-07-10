@@ -52,7 +52,7 @@ static MHConfigure *singleton;
         self.streamPickerItemsPhone = 3;
         self.streamPickerItemsPadPortrait = 4;
         self.streamPickerItemsPadLandscape = 5;
-        self.numberOfElements = 13;
+        self.numberOfElements = 5;
         self.dataSourceArray = [[NSMutableArray alloc]init];
         for(int i=0; i<self.numberOfElements; i++) {
             if(i % 2)

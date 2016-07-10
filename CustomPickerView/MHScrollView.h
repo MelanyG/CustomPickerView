@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pager;
 @property (nonatomic, weak) IBOutlet MHCollectionViewLayout *customLayout;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthCollectionViewConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pagerWidthConstraint;
 
 -(void)awakeFromNib;

@@ -18,5 +18,6 @@
 @property (nonatomic) NSInteger numberOfElemets;
 @property (nonatomic) CGFloat spacingX;
 
+- (void)setup;
 
 @end
