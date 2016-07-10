@@ -28,7 +28,6 @@
     self = [super init];
     if (self != nil)
     {
-        //self.activeIndex = [NSIndexPath indexPathForItem:0 inSection:0];
         self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
         self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
         [scroll addSubview:self.scrollView];
@@ -51,14 +50,14 @@
     //DLog(@"val is %i", interfaceOrientation);
     if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait) {
         [self.scrollView.customLayout setup];
-    [self.scrollView.collectionView reloadData];
-    [self updatePageControl];
-    if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdatePageControl)]) {
-        [_delegate shouldUpdatePageControl];
+        [self.scrollView.collectionView reloadData];
+        [self updatePageControl];
+        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdatePageControl)]) {
+            [_delegate shouldUpdatePageControl];
+        }
+        
     }
-
-    }
-    }
+}
 
 #pragma mark - UICollectionViewDataSource
 
@@ -98,7 +97,7 @@
     
     cell.imageContainer.image = [UIImage imageNamed:@"cat"];
     if(self.activeIndex.item == 0)
-       [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
+        [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
     self.activeIndex = indexPath;
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
         [_delegate didSelectCell:indexPath.item];
@@ -125,8 +124,6 @@
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"item"
                                                                  ascending:YES];
     NSArray *results = [visibleItems sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
-    
-   // NSLog(@"Item: %ld", (long)[(NSIndexPath *)results[size -1]item]);
     NSInteger visibleElement =[(NSIndexPath *)results[size -1]item] + 1;
     CGFloat allPages = visibleElement /self.scrollView.customLayout.maxElements;
     CGFloat decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
@@ -135,13 +132,11 @@
             // moved right
             if(visibleElement == self.scrollView.customLayout.numberOfElemets)
                 self.scrollView.pager.currentPage = allPages;
-  //          NSLog(@"moved right");
+            
         } else if (self.lastContentOffset > scrollView.contentOffset.x) {
             // moved left
-             if(visibleElement == 0)
-                 self.scrollView.pager.currentPage = 0;
-
-    //         NSLog(@"moved left");
+            if([(NSIndexPath *)results[0]item] == 0)
+                self.scrollView.pager.currentPage = 0;
         }
     } else {
         if (decimalPart < self.scrollView.customLayout.maxElements && decimalPart != 0) {

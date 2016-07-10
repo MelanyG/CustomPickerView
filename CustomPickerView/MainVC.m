@@ -33,13 +33,15 @@
     _scrollVC = [[MHScrollViewC alloc]initWithView:_scrollView];
     [self shouldUpdatePageControl];
     _scrollVC.delegate = self;
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Delegate methods
 
 - (void)didSelectCell:(NSInteger)selectedCell {
     NSString *urlString = @"http://www.wallpapersxl.com/wallpaper/1920x1080/natural-disasters-tornado-200748.html";

@@ -38,9 +38,7 @@
   self.downloadPhotoTask = [[NSURLSession sharedSession]
                                                    downloadTaskWithURL:urlTmp completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
                                                        [self.sourceData addObject:location];
-                                                       NSLog(@"downloaded");
-//                                                       UIImage *downloadedImage = [UIImage imageWithData:
-//                                                                                   [NSData dataWithContentsOfURL:location]];
+
                                                    }];
     [self.downloadPhotoTask resume];
 }

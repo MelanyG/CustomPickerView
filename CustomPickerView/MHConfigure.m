@@ -46,7 +46,6 @@ static MHConfigure *singleton;
     if (self)
     {
         self.streamPickerDisplaySplitters = YES;
-        //colorDict = streamPickerConfigDict[@"Splitter Color"];
         self.streamPickerSplitterColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/55.0 alpha:1.0];
         self.streamPickerSplitterWidth = 2;
         self.streamPickerItemsPhone = 3;
