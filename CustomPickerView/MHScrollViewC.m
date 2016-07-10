@@ -12,13 +12,11 @@
 #import "MHCollectionCell.h"
 #import "MHConfigure.h"
 
-@interface MHScrollViewC ()
-
-//@property (strong, nonatomic) Downloader *downloader;
-//@property (strong, nonatomic) NSMutableSet * set;
-//@property (nonatomic, strong) NSCache *myCache;
-//@property (strong, nonatomic) NSMutableArray *array;
-@property (assign, nonatomic) NSIndexPath *activeIndex;
+@interface MHScrollViewC () {
+    BOOL _isFirst;
+}
+@property (strong, nonatomic) NSIndexPath *activeIndex;
+@property (assign, nonatomic) CGFloat lastContentOffset;
 
 @end
 
@@ -30,7 +28,7 @@
     self = [super init];
     if (self != nil)
     {
-
+        //self.activeIndex = [NSIndexPath indexPathForItem:0 inSection:0];
         self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
         self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
         [scroll addSubview:self.scrollView];
@@ -39,9 +37,9 @@
          addObserver:self selector:@selector(orientationChanged:)
          name:UIDeviceOrientationDidChangeNotification
          object:[UIDevice currentDevice]];
-        [self removePageControl];
+        [self updatePageControl];
+        _isFirst = YES;
         
-
     }
     return self;
 }
@@ -52,15 +50,15 @@
     UIDeviceOrientation interfaceOrientation = [[note object] orientation];
     //DLog(@"val is %i", interfaceOrientation);
     if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait) {
-        
-    }
-    [self.scrollView.customLayout setup];
+        [self.scrollView.customLayout setup];
     [self.scrollView.collectionView reloadData];
-    [self removePageControl];
+    [self updatePageControl];
     if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdatePageControl)]) {
         [_delegate shouldUpdatePageControl];
     }
-}
+
+    }
+    }
 
 #pragma mark - UICollectionViewDataSource
 
@@ -77,30 +75,35 @@
               cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * const CellIdentifier = @"TestCell";
-
+    
     MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-
-    if(self.activeIndex == indexPath) {
-     cell.imageContainer.image = [UIImage imageNamed:@"cat"];
+    if(_isFirst == YES) {
+        cell.imageContainer.image = [UIImage imageNamed:@"cat"];
+        self.activeIndex = indexPath;
+        _isFirst = NO;
+    } else if([self.activeIndex isEqual:indexPath]) {
+        cell.imageContainer.image = [UIImage imageNamed:@"cat"];
     } else  {
-            cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
+        cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
     }
     cell.cellIndex = indexPath.item;
     [cell setVisibleSplitter:indexPath.item];
-
+    [cell.activityIndicator stopAnimating];
     return cell;
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
- MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-
+    MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
     cell.imageContainer.image = [UIImage imageNamed:@"cat"];
+    if(self.activeIndex.item == 0)
+       [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
     self.activeIndex = indexPath;
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
         [_delegate didSelectCell:indexPath.item];
-      }
-
+    }
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,7 +111,12 @@
     cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
 }
 
+#pragma mark - ScrollViewDelegate methods
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    
+    self.lastContentOffset = scrollView.contentOffset.x;
+}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -117,27 +125,41 @@
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"item"
                                                                  ascending:YES];
     NSArray *results = [visibleItems sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
-
-    NSLog(@"Item: %ld", (long)[(NSIndexPath *)results[size - 1]item]);
-    NSInteger visibleElement =[(NSIndexPath *)results[size - 1]item] + 1;
+    
+   // NSLog(@"Item: %ld", (long)[(NSIndexPath *)results[size -1]item]);
+    NSInteger visibleElement =[(NSIndexPath *)results[size -1]item] + 1;
     CGFloat allPages = visibleElement /self.scrollView.customLayout.maxElements;
     CGFloat decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
-    if (decimalPart < self.scrollView.customLayout.maxElements && decimalPart != 0) {
-        self.scrollView.pager.currentPage = allPages;
+    if(size > self.scrollView.customLayout.maxElements) {
+        if (self.lastContentOffset < scrollView.contentOffset.x) {
+            // moved right
+            if(visibleElement == self.scrollView.customLayout.numberOfElemets)
+                self.scrollView.pager.currentPage = allPages;
+  //          NSLog(@"moved right");
+        } else if (self.lastContentOffset > scrollView.contentOffset.x) {
+            // moved left
+             if(visibleElement == 0)
+                 self.scrollView.pager.currentPage = 0;
+
+    //         NSLog(@"moved left");
+        }
     } else {
-        self.scrollView.pager.currentPage = allPages - 1;
+        if (decimalPart < self.scrollView.customLayout.maxElements && decimalPart != 0) {
+            self.scrollView.pager.currentPage = allPages;
+        } else {
+            self.scrollView.pager.currentPage = allPages - 1;
+        }
     }
     [self.scrollView.pager updateCurrentPageDisplay];
-    
 }
 
 
-- (void)removePageControl
+- (void)updatePageControl
 {
     if(self.scrollView.customLayout.maxElements >= self.scrollView.customLayout.numberOfElemets) {
         self.scrollView.pager.hidden = YES;
     } else {
-         self.scrollView.pager.hidden = NO;
+        self.scrollView.pager.hidden = NO;
         self.scrollView.pager.hidesForSinglePage = YES;
         self.scrollView.pager.pageIndicatorTintColor = [MHConfigure sharedConfiguration].inactivePageDotColor;
         self.scrollView.pager.currentPageIndicatorTintColor = [MHConfigure sharedConfiguration].activePageDotColor;

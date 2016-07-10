@@ -14,6 +14,7 @@
 @interface MHCollectionCell : UICollectionViewCell
 
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UIImageView *imageContainer;
 @property (nonatomic) BOOL splitterWasSet;
 @property (weak, nonatomic) IBOutlet UIView *splitter;

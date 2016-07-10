@@ -13,30 +13,35 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+        self.activityIndicator.hidesWhenStopped = YES;
+            [self.activityIndicator startAnimating];
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.splitterWasSet = NO;
-//        self.backgroundColor = [UIColor colorWithWhite:0.85f alpha:0.8f];
-//        self.layer.borderColor = [UIColor whiteColor].CGColor;
-//        self.layer.borderWidth = 3.0f;
-//        self.layer.shadowColor = [UIColor blackColor].CGColor;
-//        self.layer.shadowRadius = 3.0f;
-//        self.layer.shadowOffset = CGSizeMake(0.0f, 2.0f);
-//        self.layer.shadowOpacity = 0.5f;
-//        self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-//        self.layer.shouldRasterize = YES;
-//        self.imageContainer = [[UIImageView alloc] initWithFrame:self.bounds];
-//        self.imageContainer.contentMode = UIViewContentModeScaleAspectFill;
-//        self.imageContainer.clipsToBounds = YES;
-        
-        [self.contentView addSubview:self.imageContainer];
-    }
-    return self;
-}
+//- (id)initWithFrame:(CGRect)frame
+//{
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//      //  self.splitterWasSet = NO;
+//
+////        self.backgroundColor = [UIColor colorWithWhite:0.85f alpha:0.8f];
+////        self.layer.borderColor = [UIColor whiteColor].CGColor;
+////        self.layer.borderWidth = 3.0f;
+////        self.layer.shadowColor = [UIColor blackColor].CGColor;
+////        self.layer.shadowRadius = 3.0f;
+////        self.layer.shadowOffset = CGSizeMake(0.0f, 2.0f);
+////        self.layer.shadowOpacity = 0.5f;
+////        self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+////        self.layer.shouldRasterize = YES;
+////        self.imageContainer = [[UIImageView alloc] initWithFrame:self.bounds];
+////        self.imageContainer.contentMode = UIViewContentModeScaleAspectFill;
+////        self.imageContainer.clipsToBounds = YES;
+//        
+//        //[self.contentView addSubview:self.imageContainer];
+//    }
+//    self.activityIndicator.hidesWhenStopped = YES;
+//        [self.activityIndicator startAnimating];
+//    return self;
+//}
 
 
 - (void)setVisibleSplitter:(NSInteger)index
@@ -59,7 +64,7 @@
 {
     [super prepareForReuse];
     
-   // self.imageContainer.image = nil;
+ self.imageContainer.image = nil;
 }
 
 
