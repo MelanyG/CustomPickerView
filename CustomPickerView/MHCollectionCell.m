@@ -39,8 +39,13 @@
 }
 
 
-- (void)setSplitter
+- (void)setVisibleSplitter:(NSInteger)index
 {
+    if(index == 0) {
+        self.splitter.hidden = YES;
+
+        return;
+    }
     if ((!self.splitterWasSet) && [MHConfigure sharedConfiguration].streamPickerDisplaySplitters) {
         CGSize mainViewSize = self.bounds.size;
         NSInteger borderWidth = [MHConfigure sharedConfiguration].streamPickerSplitterWidth;

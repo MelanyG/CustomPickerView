@@ -14,8 +14,12 @@
 
 @interface MHScrollViewC ()
 
-@property(strong, nonatomic) Downloader *downloader;
-@property (strong, nonatomic) NSMutableSet * set;
+//@property (strong, nonatomic) Downloader *downloader;
+//@property (strong, nonatomic) NSMutableSet * set;
+//@property (nonatomic, strong) NSCache *myCache;
+//@property (strong, nonatomic) NSMutableArray *array;
+@property (assign, nonatomic) NSIndexPath *activeIndex;
+
 @end
 
 @implementation MHScrollViewC
@@ -26,14 +30,9 @@
     self = [super init];
     if (self != nil)
     {
-        //    self.downloader = [Downloader new];
+
         self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
-        
         self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
-        //self.scrollView.collectionView.scrollEnabled = YES;
-        //self.scrollView.backgroundColor = [UIColor redColor];
-        _swipeItems = [[NSMutableDictionary alloc]init];
-        _set = [[NSMutableSet alloc]init];
         [scroll addSubview:self.scrollView];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter]
@@ -41,11 +40,11 @@
          name:UIDeviceOrientationDidChangeNotification
          object:[UIDevice currentDevice]];
         [self removePageControl];
-        // self.scrollView = [[MHScrollView alloc]init];
-        // [scroll addSubview:_scrollView];
+
     }
     return self;
 }
+
 
 - (void) orientationChanged:(NSNotification *)note
 {
@@ -68,53 +67,35 @@
               cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * const CellIdentifier = @"TestCell";
-    NSString *stringIndex = [NSString stringWithFormat:@"%li", indexPath.item];
-    MHCollectionCell *oldCell = _swipeItems[stringIndex];
+
     MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    if(oldCell.imageContainer.image == nil) {
-        //  MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];        if(indexPath.item % 2) {
-        if(indexPath.item % 2) {
-            cell.imageContainer.image = [UIImage imageNamed:@"penguin"];
-        } else {
-            cell.imageContainer.image = [UIImage imageNamed:@"bird1"];
-        }
-        if (indexPath.item != 0) {
-            [cell setSplitter];
-        }
-        
-        [_swipeItems setObject:cell forKey:stringIndex];
-        [_set addObject:cell];
-        //return cell;
-        
-    } else {
-        cell = [_swipeItems objectForKey: stringIndex];
+
+    if(self.activeIndex == indexPath) {
+     cell.imageContainer.image = [UIImage imageNamed:@"cat"];
+    } else  {
+            cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
     }
-    //UIImage *im = cell.imageContainer.image;
-    //
+    cell.cellIndex = indexPath.item;
+    [cell setVisibleSplitter:indexPath.item];
+
     return cell;
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+ MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+
     cell.imageContainer.image = [UIImage imageNamed:@"cat"];
-    [_swipeItems removeObjectForKey:[NSString stringWithFormat:@"%li", indexPath.item]];
-    [_swipeItems setObject:cell forKey:[NSString stringWithFormat:@"%li", indexPath.item]];
+    self.activeIndex = indexPath;
+    if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
+        [_delegate didSelectCell:indexPath.item];
+      }
+
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    // cell.imageContainer.image = [UIImage imageNamed:@"cat"];
-    [_swipeItems removeObjectForKey:[NSString stringWithFormat:@"%li", indexPath.item]];
-    if(indexPath.item % 2) {
-        cell.imageContainer.image = [UIImage imageNamed:@"penguin"];
-    } else {
-        cell.imageContainer.image = [UIImage imageNamed:@"bird1"];
-    }
-    
-    [_swipeItems setObject:cell forKey:[NSString stringWithFormat:@"%li", indexPath.item]];
-    
-    NSLog(@"deselect clicked %@",[NSString stringWithFormat:@"%li", indexPath.item] );
+    cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
 }
 
 - (void)updateDataSource: (NSIndexPath *)indexPath {
@@ -123,11 +104,27 @@
     
 }
 
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSArray *visibleItems = [self.scrollView.collectionView indexPathsForVisibleItems];
+    NSInteger size = [visibleItems count];
+    NSLog(@"Item: %ld", (long)[(NSIndexPath *)visibleItems[size - 1]item]);
+    NSInteger visibleElement =[(NSIndexPath *)visibleItems[size - 1]item] + 1;
+    CGFloat allPages = visibleElement /self.scrollView.customLayout.maxElements;
+    CGFloat decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
+    if (decimalPart < self.scrollView.customLayout.maxElements && decimalPart != 0) {
+        self.scrollView.pager.currentPage = allPages;
+    } else {
+        self.scrollView.pager.currentPage = allPages - 1;
+    }
+    [self.scrollView.pager updateCurrentPageDisplay];
+    
+}
+
+
 - (void)removePageControl
 {
-    //   NSInteger height = 16;
-    //    UIPageControl *control = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 1.25 * height, self.bounds.size.width, height)];
-    //    self.pageControl = control;
     if(self.scrollView.customLayout.maxElements >= self.scrollView.customLayout.numberOfElemets) {
         self.scrollView.pager.hidden = YES;
     } else {
@@ -136,21 +133,20 @@
         self.scrollView.pager.currentPageIndicatorTintColor = [MHConfigure sharedConfiguration].activePageDotColor;
         self.scrollView.pager.defersCurrentPageDisplay = YES;
         CGFloat allPages = self.scrollView.customLayout.numberOfElemets /self.scrollView.customLayout.maxElements;
-        if(allPages > 1 && allPages < 2) {
-            self.scrollView.pager.numberOfPages = 2;
+        CGFloat decimalPart = self.scrollView.customLayout.numberOfElemets % self.scrollView.customLayout.maxElements;
+        if(decimalPart < self.scrollView.customLayout.maxElements) {
+            self.scrollView.pager.numberOfPages = allPages + 1;
         } else {
             self.scrollView.pager.numberOfPages = allPages;
         }
     }
-    // self.scrollView.pagerWidthConstraint.constant = 0;
-    // [self.scrollView.pager removeFromSuperview];
-    // self.scrollView.pager = nil;
-    //[self insertSubview:control aboveSubview:_scrollView];
+    
 }
 
 -(void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
+
 
 @end

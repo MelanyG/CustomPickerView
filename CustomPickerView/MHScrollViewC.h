@@ -9,8 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "MHScrollView.h"
 
+@protocol MHScrollVCProtocol <NSObject>
+
+- (void)didSelectCell:(NSInteger)selectedCell;
+
+@end
+
 @interface MHScrollViewC : NSObject <UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (nonatomic, weak) id <MHScrollVCProtocol> delegate;
 @property (strong, nonatomic) NSMutableDictionary *swipeItems;
 @property (strong, nonatomic) MHScrollView *scrollView;
 @property (assign, nonatomic) NSInteger qtyOfItems;

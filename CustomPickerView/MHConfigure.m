@@ -52,9 +52,15 @@ static MHConfigure *singleton;
         self.streamPickerItemsPhone = 3;
         self.streamPickerItemsPadPortrait = 4;
         self.streamPickerItemsPadLandscape = 5;
-        self.numberOfElements = 6;
-        
-      
+        self.numberOfElements = 13;
+        self.dataSourceArray = [[NSMutableArray alloc]init];
+        for(int i=0; i<self.numberOfElements; i++) {
+            if(i % 2)
+                self.dataSourceArray[i] = [UIImage imageNamed:@"penguin"];
+            else
+                self.dataSourceArray[i] = [UIImage imageNamed:@"bird1"];
+            
+        }
     }
     return self;
 }

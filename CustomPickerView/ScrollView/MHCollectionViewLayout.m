@@ -61,24 +61,24 @@ SwipeViewAlignment;
     //self.maxElements = [MHConfigure sharedConfiguration].;
     self.numberOfElemets = [MHConfigure sharedConfiguration].numberOfElements;
     // create rotations at load so that they are consistent during prepareLayout
-    NSMutableArray *rotations = [NSMutableArray arrayWithCapacity:RotationCount];
-    
-    CGFloat percentage = 0.0f;
-    for (NSInteger i = 0; i < RotationCount; i++) {
-        // ensure that each angle is different enough to be seen
-        CGFloat newPercentage = 0.0f;
-        do {
-            newPercentage = ((CGFloat)(arc4random() % 220) - 110) * 0.0001f;
-        } while (fabsf(percentage - newPercentage) < 0.006);
-        percentage = newPercentage;
-        
-        CGFloat angle = 2 * M_PI * (1.0f + percentage);
-        CATransform3D transform = CATransform3DMakeRotation(angle, 0.0f, 0.0f, 1.0f);
-        
-        [rotations addObject:[NSValue valueWithCATransform3D:transform]];
-    }
-    
-    self.rotations = rotations;
+//    NSMutableArray *rotations = [NSMutableArray arrayWithCapacity:RotationCount];
+//    
+//    CGFloat percentage = 0.0f;
+//    for (NSInteger i = 0; i < RotationCount; i++) {
+//        // ensure that each angle is different enough to be seen
+//        CGFloat newPercentage = 0.0f;
+//        do {
+//            newPercentage = ((CGFloat)(arc4random() % 220) - 110) * 0.0001f;
+//        } while (fabsf(percentage - newPercentage) < 0.006);
+//        percentage = newPercentage;
+//        
+//        CGFloat angle = 2 * M_PI * (1.0f + percentage);
+//        CATransform3D transform = CATransform3DMakeRotation(angle, 0.0f, 0.0f, 1.0f);
+//        
+//        [rotations addObject:[NSValue valueWithCATransform3D:transform]];
+//    }
+//    
+//    self.rotations = rotations;
 }
 
 #pragma mark - Layout

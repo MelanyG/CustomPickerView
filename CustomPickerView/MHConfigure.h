@@ -23,6 +23,7 @@
 @property (nonatomic, assign, readonly) NSInteger spaceBetweenStreamPickerAndContentTable;
 @property (assign, nonatomic) NSInteger numberOfElements;
 @property (assign, nonatomic) NSInteger maxOfElements;
+@property (strong, nonatomic) NSMutableArray *dataSourceArray;
 
 + (MHConfigure *)sharedConfiguration;
 

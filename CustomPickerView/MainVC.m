@@ -10,7 +10,7 @@
 #import "MHScrollView.h"
 #import "MHScrollViewC.h"
 
-@interface MainVC ()
+@interface MainVC () <MHScrollVCProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *scrollView;
 @property (strong, nonatomic)  MHScrollViewC *scrollVC;
@@ -25,7 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"Test";
-    NSString *urlString = @"http://stackoverflow.com/questions/3088059/what-does-this-mean-nsunknownkeyexception-reasonthis-class-is-not-key-valu";
+    NSString *urlString = @"http://wallfon.com/nature/volcano-ash-storm-lightning-natural-disaster.html";
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
@@ -34,6 +34,7 @@
     if(_scrollVC.scrollView.pager.hidden) {
         self.heightScrollViewConstraint.constant = 60.f;
     }
+    _scrollVC.delegate = self;
     //  [self.scrollView bringSubviewToFront:_scrollView];
     //self.scrollVC = [MHScrollVC new];
     
@@ -45,6 +46,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didSelectCell:(NSInteger)selectedCell {
+    NSString *urlString = @"http://www.wallpapersxl.com/wallpaper/1920x1080/natural-disasters-tornado-200748.html";
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    [_webView loadRequest:urlRequest];
+}
 /*
  #pragma mark - Navigation
  
