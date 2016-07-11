@@ -11,8 +11,10 @@
 #import "MHCollectionViewLayout.h"
 #import "MHCollectionCell.h"
 #import "MHConfigure.h"
+#import "MHModelItem.h"
 
 @interface MHScrollViewC () {
+    
     BOOL _isFirst;
 }
 @property (strong, nonatomic) NSIndexPath *activeIndex;
@@ -29,6 +31,7 @@
     if (self != nil)
     {
         self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
+        _swipeItems = [[NSMutableDictionary alloc]init];
         self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
         [scroll addSubview:self.scrollView];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -76,6 +79,12 @@
     static NSString * const CellIdentifier = @"TestCell";
     
     MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    WTURLImageViewPreset *preset = [WTURLImageViewPreset defaultPreset];
+    WTURLImageViewOptions options = preset.options;
+    options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
+    preset.options = options;
+    preset.fillType = UIImageResizeFillTypeFitIn;
+    // preset.placeholderImage = cell.image;
     if(_isFirst == YES) {
         cell.imageContainer.image = [UIImage imageNamed:@"cat"];
         self.activeIndex = indexPath;
@@ -83,11 +92,15 @@
     } else if([self.activeIndex isEqual:indexPath]) {
         cell.imageContainer.image = [UIImage imageNamed:@"cat"];
     } else  {
-        cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
+        //cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
+        NSString *stringUrl = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
+        NSURL *url = [NSURL URLWithString:stringUrl];
+        [cell.imageContainer activityIndicator];
+        [cell.imageContainer setURL:url withPreset:preset];
     }
     cell.cellIndex = indexPath.item;
     [cell setVisibleSplitter:indexPath.item];
-    [cell.activityIndicator stopAnimating];
+    // [cell.activityIndicator stopAnimating];
     return cell;
     
 }
@@ -130,21 +143,32 @@
     if(size > self.scrollView.customLayout.maxElements) {
         if (self.lastContentOffset < scrollView.contentOffset.x) {
             // moved right
-            if(visibleElement == self.scrollView.customLayout.numberOfElemets)
+            visibleElement =[(NSIndexPath *)results[0]item];
+            allPages = visibleElement /self.scrollView.customLayout.maxElements;
+            decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
+            if(visibleElement == self.scrollView.customLayout.numberOfElemets || decimalPart == 0) {
                 self.scrollView.pager.currentPage = allPages;
-            
+            } else {
+                
+                    self.scrollView.pager.currentPage = allPages -1;
+            }
         } else if (self.lastContentOffset > scrollView.contentOffset.x) {
             // moved left
-            if([(NSIndexPath *)results[0]item] == 0)
+           if([(NSIndexPath *)results[0]item] == 0) {
                 self.scrollView.pager.currentPage = 0;
+            } else if(decimalPart > 1) {
+                self.scrollView.pager.currentPage = allPages;
+            } else {
+                self.scrollView.pager.currentPage = allPages - 1;
+            }
         }
     } else {
-        if (decimalPart < self.scrollView.customLayout.maxElements && decimalPart != 0) {
-            self.scrollView.pager.currentPage = allPages;
-        } else {
-            self.scrollView.pager.currentPage = allPages - 1;
+            if (decimalPart != 0) {
+                self.scrollView.pager.currentPage = allPages;
+            } else {
+                self.scrollView.pager.currentPage = allPages - 1;
+            }
         }
-    }
     [self.scrollView.pager updateCurrentPageDisplay];
 }
 

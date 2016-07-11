@@ -70,9 +70,9 @@ SwipeViewAlignment;
     NSInteger dimension = [self getDimentionToGetWidth];
     NSInteger width = dimension / self.maxElements - 0.f;
     if(self.numberOfElemets >=  self.maxElements) {
-        self.itemSize = CGSizeMake(width, 60.f);
+        self.itemSize = CGSizeMake(width, 50.f);
         CGFloat originX = ([UIScreen mainScreen].bounds.size.width - width * self.maxElements) / 2;
-        self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 0.0f, 0.0f);
+        self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 5.0f, 5.0f);
     } else  {
         self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, 50.f);
     }

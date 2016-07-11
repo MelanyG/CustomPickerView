@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -13,7 +13,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="TestCell" translatesAutoresizingMaskIntoConstraints="NO" id="cLl-mk-lTe">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="TestCell" translatesAutoresizingMaskIntoConstraints="NO" id="cLl-mk-lTe" customClass="WTURLImageView">
                         <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
                     </imageView>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pwr-57-YLF">
@@ -24,26 +24,20 @@
                             <constraint firstAttribute="height" constant="128" id="tfL-qV-KJS"/>
                         </constraints>
                     </view>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="l78-6i-hER">
-                        <rect key="frame" x="93" y="59" width="20" height="20"/>
-                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" red="0.81937765235241122" green="0.94715495072288414" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="0.75694266651457842" blue="0.97456894747914891" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="cLl-mk-lTe" secondAttribute="bottom" id="2Yb-tN-Y98"/>
                 <constraint firstItem="cLl-mk-lTe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GiW-sV-7fS"/>
                 <constraint firstItem="Pwr-57-YLF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="R1g-be-Oyq"/>
                 <constraint firstItem="cLl-mk-lTe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="SrN-29-DN8"/>
                 <constraint firstItem="Pwr-57-YLF" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="XMy-Fo-BWu"/>
-                <constraint firstItem="l78-6i-hER" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="n7q-vt-Zi4"/>
-                <constraint firstItem="l78-6i-hER" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="qI1-ld-A8c"/>
                 <constraint firstAttribute="trailing" secondItem="cLl-mk-lTe" secondAttribute="trailing" id="wnD-G6-vSJ"/>
             </constraints>
             <size key="customSize" width="206" height="138"/>
             <connections>
-                <outlet property="activityIndicator" destination="l78-6i-hER" id="Yt0-uG-Kx3"/>
                 <outlet property="imageContainer" destination="cLl-mk-lTe" id="XLc-FD-Pe4"/>
                 <outlet property="splitter" destination="Pwr-57-YLF" id="vov-pu-HHn"/>
             </connections>

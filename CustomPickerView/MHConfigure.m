@@ -51,15 +51,26 @@ static MHConfigure *singleton;
         self.streamPickerItemsPhone = 3;
         self.streamPickerItemsPadPortrait = 4;
         self.streamPickerItemsPadLandscape = 5;
-        self.numberOfElements = 5;
-        self.dataSourceArray = [[NSMutableArray alloc]init];
-        for(int i=0; i<self.numberOfElements; i++) {
-            if(i % 2)
-                self.dataSourceArray[i] = [UIImage imageNamed:@"penguin"];
-            else
-                self.dataSourceArray[i] = [UIImage imageNamed:@"bird1"];
-            
-        }
+        self.dataSourceArray = [[NSMutableArray alloc]initWithObjects:
+                                @"https://static.pexels.com/photos/1848/nature-sunny-red-flowers.jpg",
+                                @"http://all4desktop.com/data_images/original/4249535-raven.jpg",
+                                @"http://all4desktop.com/data_images/original/4249168-horse.jpg",
+                                @"http://all4desktop.com/data_images/original/4140623-fire-beach.jpg",
+                                @"http://all4desktop.com/data_images/original/4140642-white-horse.jpg",
+                                @"http://all4desktop.com/data_images/original/4140648-crisis.jpg",
+                                @"http://all4desktop.com/data_images/original/4140581-nature-sail.jpg",
+                                @"http://all4desktop.com/data_images/original/4140660-nfs-rivals.jpg",
+                                @"http://all4desktop.com/data_images/original/4140669-far-cry-4-dead-tiger.jpg",
+                                @"http://all4desktop.com/data_images/original/4140606-lake-louise-reflections.jpg",
+                                @"http://all4desktop.com/data_images/original/4140722-wooden-path.jpg",
+                                @"http://all4desktop.com/data_images/original/4140678-icelands-ring-road.jpg",
+                                @"http://all4desktop.com/data_images/original/4140765-diver-and-the-mermaid.jpg",
+                                @"http://all4desktop.com/data_images/original/4140745-denali-national-park.jpg",
+                                @"http://all4desktop.com/data_images/original/4140827-hiro-in-big-hero-6.jpg",
+                                @"http://all4desktop.com/data_images/original/4140837-eagle-effect-HD.jpg",
+                                @"http://all4desktop.com/data_images/original/4140844-trine-underwater-scene.jpg",nil];
+        self.numberOfElements = [self.dataSourceArray count];
+
     }
     return self;
 }

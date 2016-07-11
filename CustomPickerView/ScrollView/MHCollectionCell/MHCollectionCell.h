@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "MHConfigure.h"
-
+#import "WTURLImageView.h"
 
 
 @interface MHCollectionCell : UICollectionViewCell
 
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) IBOutlet UIImageView *imageContainer;
+@property (strong, nonatomic) IBOutlet WTURLImageView *imageContainer;
 @property (nonatomic) BOOL splitterWasSet;
 @property (weak, nonatomic) IBOutlet UIView *splitter;
 @property (assign, nonatomic) NSInteger cellIndex;
+@property (strong, nonatomic) UIImage *image;
 
 
 - (void)setVisibleSplitter:(NSInteger)index;
