@@ -190,7 +190,7 @@
                 self.pager.currentPage = allPages;
             } else {
                 
-                self.pager.currentPage = allPages -1;
+                self.pager.currentPage = allPages +1;
             }
         } else if (self.lastContentOffset > scrollView.contentOffset.x) {
             // moved left
