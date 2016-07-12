@@ -37,7 +37,7 @@
         _swipeModelItems = [[NSMutableDictionary alloc]init];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [self.collectionView registerNib:[UINib nibWithNibName:@"MHCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"TestCell"];
-
+        self.view.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
         [[NSNotificationCenter defaultCenter]
          addObserver:self selector:@selector(orientationChanged:)
          name:UIDeviceOrientationDidChangeNotification

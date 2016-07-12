@@ -46,8 +46,10 @@ static MHConfigure *singleton;
     if (self)
     {
         self.streamPickerDisplaySplitters = YES;
-        self.streamPickerSplitterColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/55.0 alpha:1.0];
-        self.streamPickerBackgroundColor = [UIColor colorWithRed:0.94f green:0.94f blue:0.94f alpha:1.0f];
+        self.streamPickerSplitterColor = [UIColor colorWithRed:200.0/255.0 green:200./255.0 blue:200./55.0 alpha:1.0];
+        self.streamPickerBackgroundColor = [UIColor colorWithRed:220./255.0 green:220./255.0 blue:220./55.0 alpha:1.0];
+        self.activePageDotColor = [UIColor colorWithRed:30./255.0 green:30./255.0 blue:30./55.0 alpha:1.0];
+        self.inactivePageDotColor = [UIColor colorWithRed:170./255.0 green:170./255.0 blue:170./55.0 alpha:1.0];
         self.streamPickerSplitterWidth = 2;
         self.streamPickerItemsPhone = 3;
         self.streamPickerItemsPadPortrait = 4;

@@ -27,7 +27,7 @@
         //        NSInteger borderWidth = [MHConfigure sharedConfiguration].streamPickerSplitterWidth;
         //        UIColor *borderColor = [MHConfigure sharedConfiguration].streamPickerSplitterColor;
         self.splitter.hidden = NO;
-        self.splitter.backgroundColor = [UIColor redColor];
+        self.splitter.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerSplitterColor];
         
     }
 }

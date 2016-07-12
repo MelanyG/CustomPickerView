@@ -20,7 +20,7 @@ typedef enum
 SwipeViewAlignment;
 
 @interface MHCollectionViewLayout ()
-//@property (nonatomic, strong) NSArray *rotations;
+
 @property (nonatomic, assign) SwipeViewAlignment alignment;
 @property (nonatomic, strong) NSDictionary *layoutInfo;
 
