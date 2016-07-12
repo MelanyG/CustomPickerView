@@ -14,11 +14,12 @@
 #import "MHModelItem.h"
 
 @interface MHScrollViewC () {
-    
     BOOL _isFirst;
 }
 @property (strong, nonatomic) NSIndexPath *activeIndex;
 @property (assign, nonatomic) CGFloat lastContentOffset;
+@property (strong, nonatomic) WTURLImageViewPreset *preset;
+
 
 @end
 
@@ -31,8 +32,9 @@
     if (self != nil)
     {
         self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
-        _swipeItems = [[NSMutableDictionary alloc]init];
-        self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
+        _swipeItems = [[NSArray alloc]initWithArray:[[MHConfigure sharedConfiguration] dataSourceArray]];
+        _swipeModelItems = [[NSMutableDictionary alloc]init];
+                self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
         [scroll addSubview:self.scrollView];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter]
@@ -41,6 +43,11 @@
          object:[UIDevice currentDevice]];
         [self updatePageControl];
         _isFirst = YES;
+        self.preset = [WTURLImageViewPreset defaultPreset];
+        WTURLImageViewOptions options = self.preset.options;
+        options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
+        self.preset.options = options;
+        self.preset.fillType = UIImageResizeFillTypeFitIn;
         
     }
     return self;
@@ -70,7 +77,7 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[MHConfigure sharedConfiguration]numberOfElements];
+    return [_swipeItems count];
 }
 
 - (MHCollectionCell *)collectionView:(UICollectionView *)collectionView
@@ -79,12 +86,7 @@
     static NSString * const CellIdentifier = @"TestCell";
     
     MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    WTURLImageViewPreset *preset = [WTURLImageViewPreset defaultPreset];
-    WTURLImageViewOptions options = preset.options;
-    options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
-    preset.options = options;
-    preset.fillType = UIImageResizeFillTypeFitIn;
-    // preset.placeholderImage = cell.image;
+    
     if(_isFirst == YES) {
         cell.imageContainer.image = [UIImage imageNamed:@"cat"];
         self.activeIndex = indexPath;
@@ -92,15 +94,14 @@
     } else if([self.activeIndex isEqual:indexPath]) {
         cell.imageContainer.image = [UIImage imageNamed:@"cat"];
     } else  {
-        //cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
-        NSString *stringUrl = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
+        
+        NSString *stringUrl = _swipeItems[indexPath.item];
         NSURL *url = [NSURL URLWithString:stringUrl];
-        [cell.imageContainer activityIndicator];
-        [cell.imageContainer setURL:url withPreset:preset];
+        [cell.imageContainer setURL:url withPreset:self.preset];
     }
     cell.cellIndex = indexPath.item;
     [cell setVisibleSplitter:indexPath.item];
-    // [cell.activityIndicator stopAnimating];
+    
     return cell;
     
 }
@@ -110,8 +111,8 @@
     
     cell.imageContainer.image = [UIImage imageNamed:@"cat"];
     if(self.activeIndex.item == 0)
-        [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
-    self.activeIndex = indexPath;
+        
+        self.activeIndex = indexPath;
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
         [_delegate didSelectCell:indexPath.item];
     }
@@ -120,7 +121,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.imageContainer.image = [MHConfigure sharedConfiguration].dataSourceArray[indexPath.item];
+    NSString *stringUrl = _swipeItems[indexPath.item];
+    NSURL *url = [NSURL URLWithString:stringUrl];
+    [cell.imageContainer setURL:url withPreset:self.preset];
 }
 
 #pragma mark - ScrollViewDelegate methods
@@ -150,11 +153,11 @@
                 self.scrollView.pager.currentPage = allPages;
             } else {
                 
-                    self.scrollView.pager.currentPage = allPages -1;
+                self.scrollView.pager.currentPage = allPages -1;
             }
         } else if (self.lastContentOffset > scrollView.contentOffset.x) {
             // moved left
-           if([(NSIndexPath *)results[0]item] == 0) {
+            if([(NSIndexPath *)results[0]item] == 0) {
                 self.scrollView.pager.currentPage = 0;
             } else if(decimalPart > 1) {
                 self.scrollView.pager.currentPage = allPages;
@@ -163,12 +166,12 @@
             }
         }
     } else {
-            if (decimalPart != 0) {
-                self.scrollView.pager.currentPage = allPages;
-            } else {
-                self.scrollView.pager.currentPage = allPages - 1;
-            }
+        if (decimalPart != 0) {
+            self.scrollView.pager.currentPage = allPages;
+        } else {
+            self.scrollView.pager.currentPage = allPages - 1;
         }
+    }
     [self.scrollView.pager updateCurrentPageDisplay];
 }
 

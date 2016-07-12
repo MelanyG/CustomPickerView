@@ -19,9 +19,9 @@
 @interface MHScrollViewC : NSObject <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, weak) id <MHScrollVCProtocol> delegate;
-@property (strong, nonatomic) NSMutableDictionary *swipeItems;
+@property (strong, nonatomic) NSArray *swipeItems;
+@property (strong, nonatomic) NSMutableDictionary *swipeModelItems;
 @property (strong, nonatomic) MHScrollView *scrollView;
-@property (assign, nonatomic) NSInteger qtyOfItems;
 
 -(id)initWithView:(UIView *)scroll;
 

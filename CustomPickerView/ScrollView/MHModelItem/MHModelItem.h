@@ -10,8 +10,9 @@
 
 @interface MHModelItem : NSObject
 
-@property(assign, nonatomic) NSInteger stationID;
-@property(strong, nonatomic) NSString *thumbnnailUrl;
-@property(strong, nonatomic) NSString *callSign;
+@property (assign, nonatomic) NSInteger stationID;
+@property (strong, nonatomic) NSString *thumbnnailUrl;
+@property (strong, nonatomic) NSString *textForLable;
+@property (assign, nonatomic) BOOL isSplitter;
 
 @end
