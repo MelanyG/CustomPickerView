@@ -24,6 +24,8 @@
 @property (assign, nonatomic) NSInteger numberOfElements;
 @property (assign, nonatomic) NSInteger maxOfElements;
 @property (strong, nonatomic) NSMutableArray *dataSourceArray;
+@property (strong, nonatomic) NSString *activeChannelLogoURL;
+@property (assign, nonatomic) NSInteger stationID;
 
 + (MHConfigure *)sharedConfiguration;
 

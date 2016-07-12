@@ -13,8 +13,6 @@
 @property (nonatomic) UIEdgeInsets itemInsets;
 @property (nonatomic) CGSize itemSize;
 @property (nonatomic) NSInteger maxElements;
-@property (nonatomic) CGFloat interItemSpacingY;
-@property (nonatomic) CGFloat numberOfColumns;
 @property (nonatomic) NSInteger numberOfElemets;
 @property (nonatomic) CGFloat spacingX;
 

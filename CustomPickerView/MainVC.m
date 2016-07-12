@@ -9,6 +9,7 @@
 #import "MainVC.h"
 #import "MHScrollView.h"
 #import "MHScrollViewC.h"
+#import "MHConfigure.h"
 
 @interface MainVC () <MHScrollVCProtocol>
 
@@ -44,7 +45,7 @@
 #pragma mark - Delegate methods
 
 - (void)didSelectCell:(NSInteger)selectedCell {
-    NSString *urlString = @"http://www.wallpapersxl.com/wallpaper/1920x1080/natural-disasters-tornado-200748.html";
+    NSString *urlString = [MHConfigure sharedConfiguration].dataSourceArray[selectedCell];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];

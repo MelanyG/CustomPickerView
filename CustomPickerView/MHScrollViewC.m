@@ -34,7 +34,7 @@
         self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
         _swipeItems = [[NSArray alloc]initWithArray:[[MHConfigure sharedConfiguration] dataSourceArray]];
         _swipeModelItems = [[NSMutableDictionary alloc]init];
-                self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
+        self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
         [scroll addSubview:self.scrollView];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter]
@@ -48,8 +48,7 @@
         options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
         self.preset.options = options;
         self.preset.fillType = UIImageResizeFillTypeFitIn;
-        
-    }
+     }
     return self;
 }
 
@@ -57,8 +56,7 @@
 - (void) orientationChanged:(NSNotification *)note
 {
     UIDeviceOrientation interfaceOrientation = [[note object] orientation];
-    //DLog(@"val is %i", interfaceOrientation);
-    if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait) {
+    if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait || interfaceOrientation == UIDeviceOrientationPortraitUpsideDown) {
         [self.scrollView.customLayout setup];
         [self.scrollView.collectionView reloadData];
         [self updatePageControl];
@@ -86,21 +84,45 @@
     static NSString * const CellIdentifier = @"TestCell";
     
     MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    if(_isFirst == YES) {
-        cell.imageContainer.image = [UIImage imageNamed:@"cat"];
-        self.activeIndex = indexPath;
-        _isFirst = NO;
-    } else if([self.activeIndex isEqual:indexPath]) {
-        cell.imageContainer.image = [UIImage imageNamed:@"cat"];
-    } else  {
+    NSString *stringIndex = [NSString stringWithFormat:@"%li", (long)indexPath.item];
+    MHModelItem *swipeItemView = _swipeModelItems[stringIndex];
+    if (swipeItemView == nil)
+    {
+        swipeItemView = [[MHModelItem alloc] init];
         
-        NSString *stringUrl = _swipeItems[indexPath.item];
-        NSURL *url = [NSURL URLWithString:stringUrl];
-        [cell.imageContainer setURL:url withPreset:self.preset];
+        _swipeModelItems[stringIndex] = swipeItemView;
     }
+    
+    NSString *activeThumbnailUrl = [[MHConfigure sharedConfiguration]activeChannelLogoURL];
+    NSString *thumbnailUrl = _swipeItems[indexPath.item];
+    if (activeThumbnailUrl == nil || thumbnailUrl == nil)
+    {
+        
+    }
+    else
+    {
+        if ([self.activeIndex isEqual:indexPath])
+        {
+            swipeItemView.thumbnnailUrl = activeThumbnailUrl;
+            [cell.imageContainer setURL:[NSURL URLWithString:activeThumbnailUrl] withPreset:self.preset];
+            
+        }
+        else
+        {
+            swipeItemView.thumbnnailUrl = thumbnailUrl;
+            [cell.imageContainer setURL:[NSURL URLWithString:thumbnailUrl] withPreset:self.preset];
+        }
+    }
+    
+    swipeItemView.stationID = [[MHConfigure sharedConfiguration] stationID];
+    if (indexPath.item != 0) {
+        swipeItemView.isSplitter = YES;
+    }
+    
+    
     cell.cellIndex = indexPath.item;
     [cell setVisibleSplitter:indexPath.item];
+    
     
     return cell;
     
@@ -108,14 +130,28 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+  
+    [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
+    NSString *stringIndex = [NSString stringWithFormat:@"%ld", (long)indexPath.item];
+    MHModelItem *swipeItemView = _swipeModelItems[stringIndex];
     
-    cell.imageContainer.image = [UIImage imageNamed:@"cat"];
-    if(self.activeIndex.item == 0)
+    NSString *activeThumbnailUrl = [[MHConfigure sharedConfiguration] activeChannelLogoURL];
+    NSString *thumbnailUrl = _swipeModelItems[stringIndex];
+    if (activeThumbnailUrl == nil || thumbnailUrl == nil)
+    {
+   
+    }
+    else
+    {
+        swipeItemView.thumbnnailUrl = activeThumbnailUrl;
+        [cell.imageContainer setURL:[NSURL URLWithString:activeThumbnailUrl] withPreset:self.preset];
         
-        self.activeIndex = indexPath;
+    }
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
         [_delegate didSelectCell:indexPath.item];
     }
+
+     self.activeIndex = indexPath;
     
 }
 

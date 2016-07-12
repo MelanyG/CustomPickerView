@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-      //  self.activityIndicator.hidesWhenStopped = YES;
-      //      [self.activityIndicator startAnimating];
+    //  self.activityIndicator.hidesWhenStopped = YES;
+    //      [self.activityIndicator startAnimating];
 }
 
 
@@ -25,12 +25,12 @@
         return;
     }
     if ([MHConfigure sharedConfiguration].streamPickerDisplaySplitters) {
-        CGSize mainViewSize = self.bounds.size;
-        NSInteger borderWidth = [MHConfigure sharedConfiguration].streamPickerSplitterWidth;
-        UIColor *borderColor = [MHConfigure sharedConfiguration].streamPickerSplitterColor;
+        //        CGSize mainViewSize = self.bounds.size;
+        //        NSInteger borderWidth = [MHConfigure sharedConfiguration].streamPickerSplitterWidth;
+        //        UIColor *borderColor = [MHConfigure sharedConfiguration].streamPickerSplitterColor;
         self.splitter.hidden = NO;
         self.splitter.backgroundColor = [UIColor redColor];
-
+        
     }
 }
 
@@ -38,7 +38,7 @@
 {
     [super prepareForReuse];
     
- self.imageContainer.image = nil;
+    self.imageContainer.image = nil;
 }
 
 

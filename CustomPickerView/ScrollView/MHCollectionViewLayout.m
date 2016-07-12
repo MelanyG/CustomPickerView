@@ -20,7 +20,7 @@ typedef enum
 SwipeViewAlignment;
 
 @interface MHCollectionViewLayout ()
-@property (nonatomic, strong) NSArray *rotations;
+//@property (nonatomic, strong) NSArray *rotations;
 @property (nonatomic, assign) SwipeViewAlignment alignment;
 @property (nonatomic, strong) NSDictionary *layoutInfo;
 
@@ -54,10 +54,9 @@ SwipeViewAlignment;
 {
     self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
     self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, 50.0f);
-    self.interItemSpacingY = 12.0f;
     [self getMaxNumberOfElements];
     self.numberOfElemets = [MHConfigure sharedConfiguration].numberOfElements;
-
+    
 }
 
 - (void)prepareLayout
@@ -65,7 +64,7 @@ SwipeViewAlignment;
     NSMutableDictionary *newLayoutInfo = [NSMutableDictionary dictionary];
     NSMutableDictionary *cellLayoutInfo = [NSMutableDictionary dictionary];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-     self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
+    self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
     [self getMaxNumberOfElements];
     NSInteger dimension = [self getDimentionToGetWidth];
     NSInteger width = dimension / self.maxElements - 0.f;
@@ -82,8 +81,8 @@ SwipeViewAlignment;
         UICollectionViewLayoutAttributes *itemAttributes =
         [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         itemAttributes.frame = [self frameForAlbumPhotoAtIndexPath:indexPath];
-         cellLayoutInfo[indexPath] = itemAttributes;
-      }
+        cellLayoutInfo[indexPath] = itemAttributes;
+    }
     
     
     newLayoutInfo[MHCollectionViewLayoutCellKind] = cellLayoutInfo;
@@ -98,9 +97,18 @@ SwipeViewAlignment;
 - (CGRect)frameForAlbumPhotoAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    _spacingX = 0.f;    CGFloat originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left;
+    _spacingX = self.itemInsets.left;
+    CGFloat originX;
+    if(indexPath.item >= self.maxElements) {
+        int page = indexPath.item/self.maxElements;
+       originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left + _spacingX * 2 * page;
+        
+    } else {
+    
+    originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left;
+    }
     CGFloat originY =  self.itemInsets.bottom;
- 
+    
     return CGRectMake(originX, originY, self.itemSize.width, self.itemSize.height);
 }
 
@@ -125,9 +133,7 @@ SwipeViewAlignment;
 
 - (CGSize)collectionViewContentSize
 {
-    NSInteger rowCount = [self.collectionView numberOfSections] / self.numberOfColumns;
-    CGFloat height = self.itemInsets.top + rowCount * self.itemSize.height + (rowCount - 1) * self.interItemSpacingY + self.itemInsets.bottom;
-    
+     CGFloat height = 60.0f;
     return CGSizeMake(self.numberOfElemets * self.itemSize.width + _spacingX * (self.numberOfElemets) , height);
 }
 
@@ -150,7 +156,7 @@ SwipeViewAlignment;
         else
         {
             self.alignment = SwipeViewAlignmentEdge;
-              self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadLandscape];
+            self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadLandscape];
             
         }
     }
@@ -160,7 +166,7 @@ SwipeViewAlignment;
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-     return [UIScreen mainScreen].bounds.size.width;
+        return [UIScreen mainScreen].bounds.size.width;
     }
     else
     {
@@ -171,7 +177,7 @@ SwipeViewAlignment;
         }
         else
         {
-          return [UIScreen mainScreen].bounds.size.height;
+            return [UIScreen mainScreen].bounds.size.height;
         }
     }
 }

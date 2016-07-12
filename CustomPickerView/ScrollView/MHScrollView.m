@@ -16,8 +16,6 @@
     [super awakeFromNib];
     NSLog(@"awakedfrom nib");
            [self.collectionView registerNib:[UINib nibWithNibName:@"MHCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"TestCell"];
-//     [self.collectionView registerClass:[MHCollectionCell class] forCellWithReuseIdentifier:@"TestCell"];
-    //self.collectionView.backgroundColor = [UIColor colorWithWhite:0.25f alpha:1.0f];
 
 }
 - (id)initWithCoder:(NSCoder *)aDecoder {

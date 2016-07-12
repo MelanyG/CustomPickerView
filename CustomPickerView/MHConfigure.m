@@ -47,10 +47,13 @@ static MHConfigure *singleton;
     {
         self.streamPickerDisplaySplitters = YES;
         self.streamPickerSplitterColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/55.0 alpha:1.0];
+        self.streamPickerBackgroundColor = [UIColor colorWithRed:0.94f green:0.94f blue:0.94f alpha:1.0f];
         self.streamPickerSplitterWidth = 2;
         self.streamPickerItemsPhone = 3;
         self.streamPickerItemsPadPortrait = 4;
         self.streamPickerItemsPadLandscape = 5;
+        self.stationID = 159;
+        self.activeChannelLogoURL = @"http://all4desktop.com/data_images/original/4137373-mickey-mouse-carpet.jpg";
         self.dataSourceArray = [[NSMutableArray alloc]initWithObjects:
                                 @"https://static.pexels.com/photos/1848/nature-sunny-red-flowers.jpg",
                                 @"http://all4desktop.com/data_images/original/4249535-raven.jpg",
@@ -68,7 +71,18 @@ static MHConfigure *singleton;
                                 @"http://all4desktop.com/data_images/original/4140745-denali-national-park.jpg",
                                 @"http://all4desktop.com/data_images/original/4140827-hiro-in-big-hero-6.jpg",
                                 @"http://all4desktop.com/data_images/original/4140837-eagle-effect-HD.jpg",
-                                @"http://all4desktop.com/data_images/original/4140844-trine-underwater-scene.jpg",nil];
+                                @"http://all4desktop.com/data_images/original/4140844-trine-underwater-scene.jpg",
+                                @"http://all4desktop.com/data_images/original/4137380-dragon-mountains.jpg",
+                                @"http://all4desktop.com/data_images/original/4137353-sunrise-joy.jpg",
+                                @"http://all4desktop.com/data_images/original/4137364-good-morning-coffee.jpg",
+                                @"http://all4desktop.com/data_images/original/4137345-norway-aviation.jpg",
+                                @"http://all4desktop.com/data_images/original/4137391-floating-rainbow-island.jpg",
+                                @"http://all4desktop.com/data_images/original/4137428-spring-sunflower.jpg",
+                                @"http://all4desktop.com/data_images/original/4137435-sci-fi-twilight.jpg",
+                                @"http://all4desktop.com/data_images/original/4137441-gta-5-street-fight.jpg",
+                                @"http://all4desktop.com/data_images/original/4137447-tom-clancys-the-division.jpg",
+                                @"http://all4desktop.com/data_images/original/4137469-the-legend-of-zelda-ocarina-of-time.jpg",
+                                @"http://all4desktop.com/data_images/original/4137479-sunset-maui-hawaiian-island.jpg", nil];
         self.numberOfElements = [self.dataSourceArray count];
 
     }
