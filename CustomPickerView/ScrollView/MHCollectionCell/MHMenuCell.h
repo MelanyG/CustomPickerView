@@ -11,7 +11,7 @@
 #import "WTURLImageView.h"
 
 
-@interface MHCollectionCell : UICollectionViewCell
+@interface MHMenuCell : UICollectionViewCell
 
 
 @property (strong, nonatomic) IBOutlet WTURLImageView *imageContainer;

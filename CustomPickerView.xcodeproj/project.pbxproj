@@ -31,10 +31,10 @@
 		39CBE84A1D33E40C001FE1F7 /* PINMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE8391D33E40C001FE1F7 /* PINMemoryCache.m */; };
 		39CBE84B1D33E40C001FE1F7 /* UIImage+WTExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE83B1D33E40C001FE1F7 /* UIImage+WTExtension.m */; };
 		39CBE84C1D33E40C001FE1F7 /* WTURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE83D1D33E40C001FE1F7 /* WTURLImageView.m */; };
-		39CBE8531D33E421001FE1F7 /* MHCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE84F1D33E421001FE1F7 /* MHCollectionCell.m */; };
-		39CBE8541D33E421001FE1F7 /* MHCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39CBE8501D33E421001FE1F7 /* MHCollectionCell.xib */; };
+		39CBE8531D33E421001FE1F7 /* MHMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE84F1D33E421001FE1F7 /* MHMenuCell.m */; };
+		39CBE8541D33E421001FE1F7 /* MHMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39CBE8501D33E421001FE1F7 /* MHMenuCell.xib */; };
 		39CBE8571D33E4F7001FE1F7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CBE8561D33E4F7001FE1F7 /* QuartzCore.framework */; };
-		39CBE85B1D33FD13001FE1F7 /* MHModelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE85A1D33FD13001FE1F7 /* MHModelItem.m */; };
+		39CBE85B1D33FD13001FE1F7 /* MHMenuModelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE85A1D33FD13001FE1F7 /* MHMenuModelItem.m */; };
 		39CBE85F1D35074F001FE1F7 /* MHScrollVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE85D1D35074F001FE1F7 /* MHScrollVC.m */; };
 		39CBE8601D35074F001FE1F7 /* MHScrollVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39CBE85E1D35074F001FE1F7 /* MHScrollVC.xib */; };
 /* End PBXBuildFile section */
@@ -88,12 +88,12 @@
 		39CBE83B1D33E40C001FE1F7 /* UIImage+WTExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WTExtension.m"; sourceTree = "<group>"; };
 		39CBE83C1D33E40C001FE1F7 /* WTURLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTURLImageView.h; sourceTree = "<group>"; };
 		39CBE83D1D33E40C001FE1F7 /* WTURLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTURLImageView.m; sourceTree = "<group>"; };
-		39CBE84E1D33E421001FE1F7 /* MHCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHCollectionCell.h; sourceTree = "<group>"; };
-		39CBE84F1D33E421001FE1F7 /* MHCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHCollectionCell.m; sourceTree = "<group>"; };
-		39CBE8501D33E421001FE1F7 /* MHCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHCollectionCell.xib; sourceTree = "<group>"; };
+		39CBE84E1D33E421001FE1F7 /* MHMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMenuCell.h; sourceTree = "<group>"; };
+		39CBE84F1D33E421001FE1F7 /* MHMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMenuCell.m; sourceTree = "<group>"; };
+		39CBE8501D33E421001FE1F7 /* MHMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHMenuCell.xib; sourceTree = "<group>"; };
 		39CBE8561D33E4F7001FE1F7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		39CBE8591D33FD13001FE1F7 /* MHModelItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHModelItem.h; sourceTree = "<group>"; };
-		39CBE85A1D33FD13001FE1F7 /* MHModelItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHModelItem.m; sourceTree = "<group>"; };
+		39CBE8591D33FD13001FE1F7 /* MHMenuModelItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMenuModelItem.h; sourceTree = "<group>"; };
+		39CBE85A1D33FD13001FE1F7 /* MHMenuModelItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMenuModelItem.m; sourceTree = "<group>"; };
 		39CBE85C1D35074F001FE1F7 /* MHScrollVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHScrollVC.h; path = ScrollView/MHScrollVC.h; sourceTree = "<group>"; };
 		39CBE85D1D35074F001FE1F7 /* MHScrollVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHScrollVC.m; path = ScrollView/MHScrollVC.m; sourceTree = "<group>"; };
 		39CBE85E1D35074F001FE1F7 /* MHScrollVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MHScrollVC.xib; path = ScrollView/MHScrollVC.xib; sourceTree = "<group>"; };
@@ -247,9 +247,9 @@
 		39CBE84D1D33E421001FE1F7 /* MHCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
-				39CBE84E1D33E421001FE1F7 /* MHCollectionCell.h */,
-				39CBE84F1D33E421001FE1F7 /* MHCollectionCell.m */,
-				39CBE8501D33E421001FE1F7 /* MHCollectionCell.xib */,
+				39CBE84E1D33E421001FE1F7 /* MHMenuCell.h */,
+				39CBE84F1D33E421001FE1F7 /* MHMenuCell.m */,
+				39CBE8501D33E421001FE1F7 /* MHMenuCell.xib */,
 			);
 			name = MHCollectionCell;
 			path = ScrollView/MHCollectionCell;
@@ -258,8 +258,8 @@
 		39CBE8581D33FCE8001FE1F7 /* MHModelItem */ = {
 			isa = PBXGroup;
 			children = (
-				39CBE8591D33FD13001FE1F7 /* MHModelItem.h */,
-				39CBE85A1D33FD13001FE1F7 /* MHModelItem.m */,
+				39CBE8591D33FD13001FE1F7 /* MHMenuModelItem.h */,
+				39CBE85A1D33FD13001FE1F7 /* MHMenuModelItem.m */,
 			);
 			name = MHModelItem;
 			path = ScrollView/MHModelItem;
@@ -326,7 +326,7 @@
 				39CBE8601D35074F001FE1F7 /* MHScrollVC.xib in Resources */,
 				39BB94FA1D2D26B10032AA0F /* LaunchScreen.storyboard in Resources */,
 				39BB94F71D2D26B10032AA0F /* Assets.xcassets in Resources */,
-				39CBE8541D33E421001FE1F7 /* MHCollectionCell.xib in Resources */,
+				39CBE8541D33E421001FE1F7 /* MHMenuCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39CBE8431D33E40C001FE1F7 /* AFURLConnectionOperation.m in Sources */,
-				39CBE85B1D33FD13001FE1F7 /* MHModelItem.m in Sources */,
+				39CBE85B1D33FD13001FE1F7 /* MHMenuModelItem.m in Sources */,
 				39CBE8471D33E40C001FE1F7 /* UIImageView+AFNetworking.m in Sources */,
 				390E7D5B1D2D32E800A4DF46 /* MainVC.m in Sources */,
 				39CBE84A1D33E40C001FE1F7 /* PINMemoryCache.m in Sources */,
@@ -348,7 +348,7 @@
 				39BB94EF1D2D26B10032AA0F /* AppDelegate.m in Sources */,
 				39CBE8441D33E40C001FE1F7 /* AFURLRequestSerialization.m in Sources */,
 				39CBE8421D33E40C001FE1F7 /* AFSecurityPolicy.m in Sources */,
-				39CBE8531D33E421001FE1F7 /* MHCollectionCell.m in Sources */,
+				39CBE8531D33E421001FE1F7 /* MHMenuCell.m in Sources */,
 				39CBE83E1D33E40C001FE1F7 /* AFHTTPRequestOperation.m in Sources */,
 				39CBE8481D33E40C001FE1F7 /* PINCache.m in Sources */,
 				39CBE8461D33E40C001FE1F7 /* AFURLSessionManager.m in Sources */,

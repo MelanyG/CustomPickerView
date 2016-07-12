@@ -177,6 +177,8 @@ SwipeViewAlignment;
         }
         else
         {
+            if(self.numberOfElemets > self.maxElements)
+                return [UIScreen mainScreen].bounds.size.width;
             return [UIScreen mainScreen].bounds.size.height;
         }
     }

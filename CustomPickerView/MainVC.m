@@ -9,11 +9,12 @@
 #import "MainVC.h"
 #import "MHScrollVC.h"
 #import "MHConfigure.h"
+#import "MHMenuModelItem.h"
 
 @interface MainVC () <MHScrollVCProtocol>
 
-@property (weak, nonatomic) IBOutlet UIView *scrollView;
-@property (strong, nonatomic)  MHScrollVC *scrollVC;
+@property (weak, nonatomic) IBOutlet UIView *scrollView; // conteinerMeny
+@property (strong, nonatomic) MHScrollVC *scrollVC;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightScrollViewConstraint;
 
@@ -30,8 +31,9 @@
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
     self.scrollVC = [[MHScrollVC alloc]init];
+    self.scrollVC.arrayOfModels =[self createArrayOfModels];
     [self displayContentController:_scrollVC];
-       [self shouldUpdatePageControl];
+    [self shouldUpdatePageControl];
     _scrollVC.delegate = self;
     
 }
@@ -41,7 +43,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Delegate methods
+#pragma mark - Delegate methods ///TAble  ???
 
 - (void)didSelectCell:(NSInteger)selectedCell {
     NSString *urlString = [MHConfigure sharedConfiguration].dataSourceArray[selectedCell];
@@ -52,12 +54,14 @@
 
 - (void)shouldUpdatePageControl {
     if(_scrollVC.pager.hidden) {
-        self.heightScrollViewConstraint.constant = 60.f;
+        self.heightScrollViewConstraint.constant = 60.f; // like constant
     } else {
         self.heightScrollViewConstraint.constant = 80.f;
     }
     [self.view setNeedsUpdateConstraints];
 }
+
+#pragma mark - Navigation methods
 
 - (void) displayContentController: (MHScrollVC*) content {
     [self addChildViewController:content];
@@ -68,8 +72,12 @@
     [content didMoveToParentViewController:self];
 }
 
+#pragma mark - Private methods
+
 - (void)createConstraints
 {
+//    self.scrollVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
                                                     attribute:NSLayoutAttributeTop
                                                     relatedBy:NSLayoutRelationEqual
@@ -106,14 +114,23 @@
 
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (NSArray *)createArrayOfModels {
+    NSMutableArray *arrayOfModels = [[NSMutableArray alloc]init];
+    NSInteger count = [[MHConfigure sharedConfiguration]numberOfElements];
+    for(int i = 0; i < count; i++) {
+        MHMenuModelItem *item = [[MHMenuModelItem alloc]init];
+        item.stationID = [[MHConfigure sharedConfiguration]stationID];
+        item.inActiveThumbnnailUrl = [MHConfigure sharedConfiguration].dataSourceArray[i];
+       item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
+        if(i == 0) {
+            item.isSplitter = NO;
+        } else {
+            item.isSplitter = YES;
+        }
+        arrayOfModels[i] = item;
+    }
+     return arrayOfModels;
+}
+
 
 @end

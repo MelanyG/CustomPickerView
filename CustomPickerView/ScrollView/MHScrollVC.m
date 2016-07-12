@@ -8,10 +8,9 @@
 
 #import "MHScrollVC.h"
 #import "Downloader.h"
-#import "MHCollectionViewLayout.h"
-#import "MHCollectionCell.h"
+#import "MHMenuCell.h"
 #import "MHConfigure.h"
-#import "MHModelItem.h"
+#import "MHMenuModelItem.h"
 
 @interface MHScrollVC () {
     BOOL _isFirst;
@@ -32,18 +31,16 @@
     if (self != nil)
     {
         self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollVC" owner:self options:nil] objectAtIndex:0];
-                self.swipeItems = [[NSArray alloc]initWithArray:[MHConfigure sharedConfiguration].dataSourceArray];
-
-        _swipeModelItems = [[NSMutableDictionary alloc]init];
-        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"MHCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"TestCell"];
+        [self.collectionView registerNib:[UINib nibWithNibName:@"MHMenuCell" bundle:nil] forCellWithReuseIdentifier:@"MenuCell"];//menuCell
         self.view.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter]
          addObserver:self selector:@selector(orientationChanged:)
          name:UIDeviceOrientationDidChangeNotification
          object:[UIDevice currentDevice]];
-        [self updatePageControl];
-        _isFirst = YES;
+        
+        [self updatePageControl]; /// remove
+        _isFirst = YES; //remove 6
         self.preset = [WTURLImageViewPreset defaultPreset];
         WTURLImageViewOptions options = self.preset.options;
         options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
@@ -76,27 +73,17 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [_swipeItems count];
+    return [_arrayOfModels count];
 }
 
-- (MHCollectionCell *)collectionView:(UICollectionView *)collectionView
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
               cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * const CellIdentifier = @"TestCell";
+    static NSString * const CellIdentifier = @"MenuCell";
     
-    MHCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSString *stringIndex = [NSString stringWithFormat:@"%li", (long)indexPath.item];
-    MHModelItem *swipeItemView = _swipeModelItems[stringIndex];
-    if (swipeItemView == nil)
-    {
-        swipeItemView = [[MHModelItem alloc] init];
-        
-        _swipeModelItems[stringIndex] = swipeItemView;
-    }
-    
-    NSString *activeThumbnailUrl = [[MHConfigure sharedConfiguration]activeChannelLogoURL];
-    NSString *thumbnailUrl = _swipeItems[indexPath.item];
-    if (activeThumbnailUrl == nil || thumbnailUrl == nil)
+    MHMenuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    MHMenuModelItem *modelItem = _arrayOfModels[indexPath.item];
+    if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil)
     {
         
     }
@@ -104,48 +91,34 @@
     {
         if ([self.activeIndex isEqual:indexPath])
         {
-            swipeItemView.thumbnnailUrl = activeThumbnailUrl;
-            [cell.imageContainer setURL:[NSURL URLWithString:activeThumbnailUrl] withPreset:self.preset];
-            
-        }
+         [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
+          }
         else
         {
-            swipeItemView.thumbnnailUrl = thumbnailUrl;
-            [cell.imageContainer setURL:[NSURL URLWithString:thumbnailUrl] withPreset:self.preset];
+            [cell.imageContainer setURL:[NSURL URLWithString:modelItem.inActiveThumbnnailUrl] withPreset:self.preset];
         }
     }
-    
-    swipeItemView.stationID = [[MHConfigure sharedConfiguration] stationID];
-    if (indexPath.item != 0) {
-        swipeItemView.isSplitter = YES;
-    }
-    
     
     cell.cellIndex = indexPath.item;
     [cell setVisibleSplitter:indexPath.item];
-    
     
     return cell;
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    MHMenuCell *cell = (MHMenuCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
-    NSString *stringIndex = [NSString stringWithFormat:@"%ld", (long)indexPath.item];
-    MHModelItem *swipeItemView = _swipeModelItems[stringIndex];
-    
-    NSString *activeThumbnailUrl = [[MHConfigure sharedConfiguration] activeChannelLogoURL];
-    NSString *thumbnailUrl = _swipeModelItems[stringIndex];
-    if (activeThumbnailUrl == nil || thumbnailUrl == nil)
+    MHMenuModelItem *modelItem = _arrayOfModels[indexPath.item];
+
+    if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil)
     {
-        
+        //TO-DO
     }
     else
     {
-        swipeItemView.thumbnnailUrl = activeThumbnailUrl;
-        [cell.imageContainer setURL:[NSURL URLWithString:activeThumbnailUrl] withPreset:self.preset];
+       [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
         
     }
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
@@ -157,10 +130,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    NSString *stringUrl = _swipeItems[indexPath.item];
-    NSURL *url = [NSURL URLWithString:stringUrl];
-    [cell.imageContainer setURL:url withPreset:self.preset];
+    MHMenuCell *cell = (MHMenuCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    MHMenuModelItem *modelItem = _arrayOfModels[indexPath.item];
+    [cell.imageContainer setURL:[NSURL URLWithString:modelItem.inActiveThumbnnailUrl] withPreset:self.preset];
 }
 
 #pragma mark - ScrollViewDelegate methods
@@ -174,8 +146,7 @@
 {
     NSArray *visibleItems = [self.collectionView indexPathsForVisibleItems];
     NSInteger size = [visibleItems count];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"item"
-                                                                 ascending:YES];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"item" ascending:YES];
     NSArray *results = [visibleItems sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     NSInteger visibleElement =[(NSIndexPath *)results[size -1]item] + 1;
     CGFloat allPages = visibleElement /self.customLayout.maxElements;

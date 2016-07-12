@@ -6,9 +6,9 @@
 //  Copyright © 2016 Melaniia Hulianovych. All rights reserved.
 //
 
-#import "MHCollectionCell.h"
+#import "MHMenuCell.h"
 
-@implementation MHCollectionCell
+@implementation MHMenuCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -20,7 +20,7 @@
 @interface MHScrollVC : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) id <MHScrollVCProtocol> delegate;
-@property (strong, nonatomic) NSArray *swipeItems;
+@property (strong, nonatomic) NSArray *arrayOfModels;
 @property (strong, nonatomic) NSMutableDictionary *swipeModelItems;
 @property (strong, nonatomic) NSString *associatedWith;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
