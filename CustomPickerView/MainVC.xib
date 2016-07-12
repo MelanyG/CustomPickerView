@@ -18,27 +18,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LHf-pJ-czu">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                    <color key="backgroundColor" red="0.95160728693008423" green="0.2057812511920929" blue="0.57279813289642334" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="vWb-Fg-hCH"/>
-                    </constraints>
-                    <items>
-                        <navigationItem title="Title" id="jM4-ld-2Kv">
-                            <barButtonItem key="leftBarButtonItem" id="9Z8-Ow-OtL">
-                                <view key="customView" contentMode="scaleToFill" id="e5G-CL-gHV">
-                                    <rect key="frame" x="20" y="-18" width="600" height="80"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="80" id="b52-WJ-goM"/>
-                                    </constraints>
-                                </view>
-                            </barButtonItem>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
                 <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgq-Y0-ool">
                     <rect key="frame" x="0.0" y="144" width="600" height="456"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
@@ -56,16 +35,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="LHf-pJ-czu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2Xt-ls-f27"/>
-                <constraint firstItem="7c2-5C-VZ9" firstAttribute="top" secondItem="LHf-pJ-czu" secondAttribute="bottom" constant="20" id="6OE-Kc-emt"/>
                 <constraint firstItem="7c2-5C-VZ9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pzt-mA-Q3d"/>
-                <constraint firstAttribute="trailing" secondItem="LHf-pJ-czu" secondAttribute="trailing" id="RVe-hb-tVS"/>
                 <constraint firstAttribute="trailing" secondItem="mgq-Y0-ool" secondAttribute="trailing" id="TZg-g8-K22"/>
                 <constraint firstAttribute="bottom" secondItem="mgq-Y0-ool" secondAttribute="bottom" id="gDn-j7-qhA"/>
                 <constraint firstAttribute="trailing" secondItem="7c2-5C-VZ9" secondAttribute="trailing" id="iYo-kq-MSr"/>
                 <constraint firstItem="mgq-Y0-ool" firstAttribute="top" secondItem="7c2-5C-VZ9" secondAttribute="bottom" id="kzY-mm-7Db"/>
                 <constraint firstItem="mgq-Y0-ool" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="t1u-8g-Ydy"/>
-                <constraint firstItem="LHf-pJ-czu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zo9-ft-REb"/>
+                <constraint firstItem="7c2-5C-VZ9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="x6A-hC-atS"/>
             </constraints>
             <point key="canvasLocation" x="236" y="367"/>
         </view>

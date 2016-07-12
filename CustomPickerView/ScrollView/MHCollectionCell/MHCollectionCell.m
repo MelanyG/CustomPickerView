@@ -12,9 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-    //  self.activityIndicator.hidesWhenStopped = YES;
-    //      [self.activityIndicator startAnimating];
+
 }
 
 

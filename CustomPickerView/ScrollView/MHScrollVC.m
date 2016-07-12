@@ -225,7 +225,7 @@
         self.pager.defersCurrentPageDisplay = YES;
         CGFloat allPages = self.customLayout.numberOfElemets /self.customLayout.maxElements;
         CGFloat decimalPart = self.customLayout.numberOfElemets % self.customLayout.maxElements;
-        if(decimalPart < self.customLayout.maxElements) {
+        if(decimalPart > 0 ) {
             self.pager.numberOfPages = allPages + 1;
         } else {
             self.pager.numberOfPages = allPages;
