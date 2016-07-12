@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MHScrollVC">
+            <connections>
+                <outlet property="collectionView" destination="XYP-xB-M1w" id="ygK-RF-LwS"/>
+                <outlet property="customLayout" destination="beV-74-VJ9" id="Uc7-Qr-AOx"/>
+                <outlet property="pager" destination="cMa-V8-LnR" id="n2U-T8-URW"/>
+                <outlet property="pagerWidthConstraint" destination="Z6W-YL-x3b" id="HWC-zU-CDN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="P03-UI-Lia" customClass="MHScrollView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" delaysContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="XYP-xB-M1w">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                    <color key="backgroundColor" red="1" green="0.10864564359999999" blue="0.91480463099999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="hzP-cB-ouJ">
+                            <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                        </constraint>
+                    </constraints>
+                    <collectionViewLayout key="collectionViewLayout" id="beV-74-VJ9" customClass="MHCollectionViewLayout"/>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="hzP-cB-ouJ"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <mask key="constraints">
+                            <include reference="hzP-cB-ouJ"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="yRS-GG-Wys"/>
+                        <outlet property="delegate" destination="-1" id="fqD-IL-8AD"/>
+                    </connections>
+                </collectionView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cMa-V8-LnR">
+                    <rect key="frame" x="0.0" y="60" width="414" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Z6W-YL-x3b">
+                            <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                        </constraint>
+                    </constraints>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Z6W-YL-x3b"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <mask key="constraints">
+                            <include reference="Z6W-YL-x3b"/>
+                        </mask>
+                    </variation>
+                </pageControl>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.10864564359999999" blue="0.91480463099999998" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="cMa-V8-LnR" secondAttribute="trailing" id="PgS-Mb-WZ2">
+                    <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                </constraint>
+                <constraint firstItem="XYP-xB-M1w" firstAttribute="leading" secondItem="P03-UI-Lia" secondAttribute="leading" id="XiK-lO-ghD"/>
+                <constraint firstItem="XYP-xB-M1w" firstAttribute="top" secondItem="P03-UI-Lia" secondAttribute="top" id="fhb-kR-M1b"/>
+                <constraint firstItem="cMa-V8-LnR" firstAttribute="top" secondItem="XYP-xB-M1w" secondAttribute="bottom" id="fk5-8s-98z">
+                    <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                </constraint>
+                <constraint firstItem="cMa-V8-LnR" firstAttribute="leading" secondItem="P03-UI-Lia" secondAttribute="leading" id="nDq-mJ-R8C"/>
+                <constraint firstAttribute="trailing" secondItem="XYP-xB-M1w" secondAttribute="trailing" id="vma-XX-z3C"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="XYP-xB-M1w"/>
+                    <include reference="cMa-V8-LnR"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="PgS-Mb-WZ2"/>
+                    <include reference="nDq-mJ-R8C"/>
+                    <include reference="fk5-8s-98z"/>
+                    <include reference="fhb-kR-M1b"/>
+                    <include reference="XiK-lO-ghD"/>
+                    <include reference="vma-XX-z3C"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=regular">
+                <mask key="subviews">
+                    <include reference="XYP-xB-M1w"/>
+                    <include reference="cMa-V8-LnR"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="PgS-Mb-WZ2"/>
+                    <include reference="nDq-mJ-R8C"/>
+                    <include reference="fk5-8s-98z"/>
+                    <include reference="fhb-kR-M1b"/>
+                    <include reference="XiK-lO-ghD"/>
+                    <include reference="vma-XX-z3C"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="479" y="239"/>
+        </view>
+    </objects>
+</document>

@@ -1,19 +1,19 @@
 //
-//  MHScrollViewC.m
+//  MHScrollVC.m
 //  CustomPickerView
 //
-//  Created by Melaniia Hulianovych on 7/6/16.
+//  Created by Melaniia Hulianovych on 7/12/16.
 //  Copyright © 2016 Melaniia Hulianovych. All rights reserved.
 //
 
-#import "MHScrollViewC.h"
+#import "MHScrollVC.h"
 #import "Downloader.h"
 #import "MHCollectionViewLayout.h"
 #import "MHCollectionCell.h"
 #import "MHConfigure.h"
 #import "MHModelItem.h"
 
-@interface MHScrollViewC () {
+@interface MHScrollVC () {
     BOOL _isFirst;
 }
 @property (strong, nonatomic) NSIndexPath *activeIndex;
@@ -23,20 +23,21 @@
 
 @end
 
-@implementation MHScrollViewC
+@implementation MHScrollVC
 
 
 
--(id)initWithView:(UIView *) scroll {
+-(id)init {
     self = [super init];
     if (self != nil)
     {
-        self.scrollView = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollView" owner:self options:nil] objectAtIndex:0];
-        _swipeItems = [[NSArray alloc]initWithArray:[[MHConfigure sharedConfiguration] dataSourceArray]];
+        self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollVC" owner:self options:nil] objectAtIndex:0];
+                self.swipeItems = [[NSArray alloc]initWithArray:[MHConfigure sharedConfiguration].dataSourceArray];
+
         _swipeModelItems = [[NSMutableDictionary alloc]init];
-        self.scrollView.frame = CGRectMake(scroll.bounds.origin.x, scroll.bounds.origin.y, scroll.bounds.size.width, scroll.bounds.size.height);
-        [scroll addSubview:self.scrollView];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [self.collectionView registerNib:[UINib nibWithNibName:@"MHCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"TestCell"];
+
         [[NSNotificationCenter defaultCenter]
          addObserver:self selector:@selector(orientationChanged:)
          name:UIDeviceOrientationDidChangeNotification
@@ -48,7 +49,7 @@
         options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
         self.preset.options = options;
         self.preset.fillType = UIImageResizeFillTypeFitIn;
-     }
+    }
     return self;
 }
 
@@ -57,8 +58,8 @@
 {
     UIDeviceOrientation interfaceOrientation = [[note object] orientation];
     if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait || interfaceOrientation == UIDeviceOrientationPortraitUpsideDown) {
-        [self.scrollView.customLayout setup];
-        [self.scrollView.collectionView reloadData];
+        [self.customLayout setup];
+        [self.collectionView reloadData];
         [self updatePageControl];
         if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdatePageControl)]) {
             [_delegate shouldUpdatePageControl];
@@ -130,7 +131,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MHCollectionCell *cell = (MHCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-  
+    
     [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
     NSString *stringIndex = [NSString stringWithFormat:@"%ld", (long)indexPath.item];
     MHModelItem *swipeItemView = _swipeModelItems[stringIndex];
@@ -139,7 +140,7 @@
     NSString *thumbnailUrl = _swipeModelItems[stringIndex];
     if (activeThumbnailUrl == nil || thumbnailUrl == nil)
     {
-   
+        
     }
     else
     {
@@ -150,8 +151,8 @@
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
         [_delegate didSelectCell:indexPath.item];
     }
-
-     self.activeIndex = indexPath;
+    
+    self.activeIndex = indexPath;
     
 }
 
@@ -171,63 +172,63 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSArray *visibleItems = [self.scrollView.collectionView indexPathsForVisibleItems];
+    NSArray *visibleItems = [self.collectionView indexPathsForVisibleItems];
     NSInteger size = [visibleItems count];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"item"
                                                                  ascending:YES];
     NSArray *results = [visibleItems sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     NSInteger visibleElement =[(NSIndexPath *)results[size -1]item] + 1;
-    CGFloat allPages = visibleElement /self.scrollView.customLayout.maxElements;
-    CGFloat decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
-    if(size > self.scrollView.customLayout.maxElements) {
+    CGFloat allPages = visibleElement /self.customLayout.maxElements;
+    CGFloat decimalPart = visibleElement % self.customLayout.maxElements;
+    if(size > self.customLayout.maxElements) {
         if (self.lastContentOffset < scrollView.contentOffset.x) {
             // moved right
             visibleElement =[(NSIndexPath *)results[0]item];
-            allPages = visibleElement /self.scrollView.customLayout.maxElements;
-            decimalPart = visibleElement % self.scrollView.customLayout.maxElements;
-            if(visibleElement == self.scrollView.customLayout.numberOfElemets || decimalPart == 0) {
-                self.scrollView.pager.currentPage = allPages;
+            allPages = visibleElement /self.customLayout.maxElements;
+            decimalPart = visibleElement % self.customLayout.maxElements;
+            if(visibleElement == self.customLayout.numberOfElemets || decimalPart == 0) {
+                self.pager.currentPage = allPages;
             } else {
                 
-                self.scrollView.pager.currentPage = allPages -1;
+                self.pager.currentPage = allPages -1;
             }
         } else if (self.lastContentOffset > scrollView.contentOffset.x) {
             // moved left
             if([(NSIndexPath *)results[0]item] == 0) {
-                self.scrollView.pager.currentPage = 0;
+                self.pager.currentPage = 0;
             } else if(decimalPart > 1) {
-                self.scrollView.pager.currentPage = allPages;
+                self.pager.currentPage = allPages;
             } else {
-                self.scrollView.pager.currentPage = allPages - 1;
+                self.pager.currentPage = allPages - 1;
             }
         }
     } else {
         if (decimalPart != 0) {
-            self.scrollView.pager.currentPage = allPages;
+            self.pager.currentPage = allPages;
         } else {
-            self.scrollView.pager.currentPage = allPages - 1;
+            self.pager.currentPage = allPages - 1;
         }
     }
-    [self.scrollView.pager updateCurrentPageDisplay];
+    [self.pager updateCurrentPageDisplay];
 }
 
 
 - (void)updatePageControl
 {
-    if(self.scrollView.customLayout.maxElements >= self.scrollView.customLayout.numberOfElemets) {
-        self.scrollView.pager.hidden = YES;
+    if(self.customLayout.maxElements >= self.customLayout.numberOfElemets) {
+        self.pager.hidden = YES;
     } else {
-        self.scrollView.pager.hidden = NO;
-        self.scrollView.pager.hidesForSinglePage = YES;
-        self.scrollView.pager.pageIndicatorTintColor = [MHConfigure sharedConfiguration].inactivePageDotColor;
-        self.scrollView.pager.currentPageIndicatorTintColor = [MHConfigure sharedConfiguration].activePageDotColor;
-        self.scrollView.pager.defersCurrentPageDisplay = YES;
-        CGFloat allPages = self.scrollView.customLayout.numberOfElemets /self.scrollView.customLayout.maxElements;
-        CGFloat decimalPart = self.scrollView.customLayout.numberOfElemets % self.scrollView.customLayout.maxElements;
-        if(decimalPart < self.scrollView.customLayout.maxElements) {
-            self.scrollView.pager.numberOfPages = allPages + 1;
+        self.pager.hidden = NO;
+        self.pager.hidesForSinglePage = YES;
+        self.pager.pageIndicatorTintColor = [MHConfigure sharedConfiguration].inactivePageDotColor;
+        self.pager.currentPageIndicatorTintColor = [MHConfigure sharedConfiguration].activePageDotColor;
+        self.pager.defersCurrentPageDisplay = YES;
+        CGFloat allPages = self.customLayout.numberOfElemets /self.customLayout.maxElements;
+        CGFloat decimalPart = self.customLayout.numberOfElemets % self.customLayout.maxElements;
+        if(decimalPart < self.customLayout.maxElements) {
+            self.pager.numberOfPages = allPages + 1;
         } else {
-            self.scrollView.pager.numberOfPages = allPages;
+            self.pager.numberOfPages = allPages;
         }
     }
     

@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		390E7D5B1D2D32E800A4DF46 /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E7D591D2D32E800A4DF46 /* MainVC.m */; };
 		390E7D5C1D2D32E800A4DF46 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390E7D5A1D2D32E800A4DF46 /* MainVC.xib */; };
-		390E7D631D2D33F600A4DF46 /* MHScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390E7D621D2D33F600A4DF46 /* MHScrollView.xib */; };
 		390E7D661D2D371C00A4DF46 /* Downloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E7D651D2D371C00A4DF46 /* Downloader.m */; };
-		390E7D751D2D64D100A4DF46 /* MHScrollViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E7D741D2D64D100A4DF46 /* MHScrollViewC.m */; };
 		390E7D7D1D2E53E200A4DF46 /* MHCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E7D7C1D2E53E200A4DF46 /* MHCollectionViewLayout.m */; };
 		390E7D801D2EAE1400A4DF46 /* MHConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E7D7F1D2EAE1400A4DF46 /* MHConfigure.m */; };
 		39BB94EC1D2D26B10032AA0F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BB94EB1D2D26B10032AA0F /* main.m */; };
@@ -35,20 +33,18 @@
 		39CBE84C1D33E40C001FE1F7 /* WTURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE83D1D33E40C001FE1F7 /* WTURLImageView.m */; };
 		39CBE8531D33E421001FE1F7 /* MHCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE84F1D33E421001FE1F7 /* MHCollectionCell.m */; };
 		39CBE8541D33E421001FE1F7 /* MHCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39CBE8501D33E421001FE1F7 /* MHCollectionCell.xib */; };
-		39CBE8551D33E421001FE1F7 /* MHScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE8521D33E421001FE1F7 /* MHScrollView.m */; };
 		39CBE8571D33E4F7001FE1F7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CBE8561D33E4F7001FE1F7 /* QuartzCore.framework */; };
 		39CBE85B1D33FD13001FE1F7 /* MHModelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE85A1D33FD13001FE1F7 /* MHModelItem.m */; };
+		39CBE85F1D35074F001FE1F7 /* MHScrollVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBE85D1D35074F001FE1F7 /* MHScrollVC.m */; };
+		39CBE8601D35074F001FE1F7 /* MHScrollVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39CBE85E1D35074F001FE1F7 /* MHScrollVC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		390E7D581D2D32E800A4DF46 /* MainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainVC.h; sourceTree = "<group>"; };
 		390E7D591D2D32E800A4DF46 /* MainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainVC.m; sourceTree = "<group>"; };
 		390E7D5A1D2D32E800A4DF46 /* MainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
-		390E7D621D2D33F600A4DF46 /* MHScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MHScrollView.xib; path = ScrollView/MHScrollView.xib; sourceTree = "<group>"; };
 		390E7D641D2D371C00A4DF46 /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
 		390E7D651D2D371C00A4DF46 /* Downloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Downloader.m; sourceTree = "<group>"; };
-		390E7D731D2D64D100A4DF46 /* MHScrollViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHScrollViewC.h; sourceTree = "<group>"; };
-		390E7D741D2D64D100A4DF46 /* MHScrollViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHScrollViewC.m; sourceTree = "<group>"; };
 		390E7D7B1D2E53E200A4DF46 /* MHCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHCollectionViewLayout.h; path = ScrollView/MHCollectionViewLayout.h; sourceTree = "<group>"; };
 		390E7D7C1D2E53E200A4DF46 /* MHCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHCollectionViewLayout.m; path = ScrollView/MHCollectionViewLayout.m; sourceTree = "<group>"; };
 		390E7D7E1D2EAE1400A4DF46 /* MHConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHConfigure.h; sourceTree = "<group>"; };
@@ -95,11 +91,12 @@
 		39CBE84E1D33E421001FE1F7 /* MHCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHCollectionCell.h; sourceTree = "<group>"; };
 		39CBE84F1D33E421001FE1F7 /* MHCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHCollectionCell.m; sourceTree = "<group>"; };
 		39CBE8501D33E421001FE1F7 /* MHCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHCollectionCell.xib; sourceTree = "<group>"; };
-		39CBE8511D33E421001FE1F7 /* MHScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHScrollView.h; path = ScrollView/MHScrollView.h; sourceTree = "<group>"; };
-		39CBE8521D33E421001FE1F7 /* MHScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHScrollView.m; path = ScrollView/MHScrollView.m; sourceTree = "<group>"; };
 		39CBE8561D33E4F7001FE1F7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		39CBE8591D33FD13001FE1F7 /* MHModelItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHModelItem.h; sourceTree = "<group>"; };
 		39CBE85A1D33FD13001FE1F7 /* MHModelItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHModelItem.m; sourceTree = "<group>"; };
+		39CBE85C1D35074F001FE1F7 /* MHScrollVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHScrollVC.h; path = ScrollView/MHScrollVC.h; sourceTree = "<group>"; };
+		39CBE85D1D35074F001FE1F7 /* MHScrollVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHScrollVC.m; path = ScrollView/MHScrollVC.m; sourceTree = "<group>"; };
+		39CBE85E1D35074F001FE1F7 /* MHScrollVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MHScrollVC.xib; path = ScrollView/MHScrollVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +114,11 @@
 		390E7D601D2D337800A4DF46 /* ScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				39CBE85C1D35074F001FE1F7 /* MHScrollVC.h */,
+				39CBE85D1D35074F001FE1F7 /* MHScrollVC.m */,
+				39CBE85E1D35074F001FE1F7 /* MHScrollVC.xib */,
 				39CBE8581D33FCE8001FE1F7 /* MHModelItem */,
 				39CBE84D1D33E421001FE1F7 /* MHCollectionCell */,
-				39CBE8511D33E421001FE1F7 /* MHScrollView.h */,
-				39CBE8521D33E421001FE1F7 /* MHScrollView.m */,
-				390E7D621D2D33F600A4DF46 /* MHScrollView.xib */,
 				390E7D7B1D2E53E200A4DF46 /* MHCollectionViewLayout.h */,
 				390E7D7C1D2E53E200A4DF46 /* MHCollectionViewLayout.m */,
 			);
@@ -159,8 +156,6 @@
 		39BB94E91D2D26B10032AA0F /* CustomPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				390E7D731D2D64D100A4DF46 /* MHScrollViewC.h */,
-				390E7D741D2D64D100A4DF46 /* MHScrollViewC.m */,
 				390E7D611D2D338400A4DF46 /* MainVC */,
 				390E7D601D2D337800A4DF46 /* ScrollView */,
 				39BB94ED1D2D26B10032AA0F /* AppDelegate.h */,
@@ -328,7 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				390E7D5C1D2D32E800A4DF46 /* MainVC.xib in Resources */,
-				390E7D631D2D33F600A4DF46 /* MHScrollView.xib in Resources */,
+				39CBE8601D35074F001FE1F7 /* MHScrollVC.xib in Resources */,
 				39BB94FA1D2D26B10032AA0F /* LaunchScreen.storyboard in Resources */,
 				39BB94F71D2D26B10032AA0F /* Assets.xcassets in Resources */,
 				39CBE8541D33E421001FE1F7 /* MHCollectionCell.xib in Resources */,
@@ -359,13 +354,12 @@
 				39CBE8461D33E40C001FE1F7 /* AFURLSessionManager.m in Sources */,
 				39CBE84C1D33E40C001FE1F7 /* WTURLImageView.m in Sources */,
 				390E7D7D1D2E53E200A4DF46 /* MHCollectionViewLayout.m in Sources */,
-				39CBE8551D33E421001FE1F7 /* MHScrollView.m in Sources */,
-				390E7D751D2D64D100A4DF46 /* MHScrollViewC.m in Sources */,
 				39CBE8401D33E40C001FE1F7 /* AFHTTPSessionManager.m in Sources */,
 				39CBE84B1D33E40C001FE1F7 /* UIImage+WTExtension.m in Sources */,
 				39CBE8491D33E40C001FE1F7 /* PINDiskCache.m in Sources */,
 				39BB94EC1D2D26B10032AA0F /* main.m in Sources */,
 				39CBE8411D33E40C001FE1F7 /* AFNetworkReachabilityManager.m in Sources */,
+				39CBE85F1D35074F001FE1F7 /* MHScrollVC.m in Sources */,
 				39CBE83F1D33E40C001FE1F7 /* AFHTTPRequestOperationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

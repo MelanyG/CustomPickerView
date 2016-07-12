@@ -7,14 +7,13 @@
 //
 
 #import "MainVC.h"
-#import "MHScrollView.h"
-#import "MHScrollViewC.h"
+#import "MHScrollVC.h"
 #import "MHConfigure.h"
 
 @interface MainVC () <MHScrollVCProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *scrollView;
-@property (strong, nonatomic)  MHScrollViewC *scrollVC;
+@property (strong, nonatomic)  MHScrollVC *scrollVC;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightScrollViewConstraint;
 
@@ -30,9 +29,9 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
-    
-    _scrollVC = [[MHScrollViewC alloc]initWithView:_scrollView];
-    [self shouldUpdatePageControl];
+    self.scrollVC = [[MHScrollVC alloc]init];
+    [self displayContentController:_scrollVC];
+       [self shouldUpdatePageControl];
     _scrollVC.delegate = self;
     
 }
@@ -52,13 +51,61 @@
 }
 
 - (void)shouldUpdatePageControl {
-    if(_scrollVC.scrollView.pager.hidden) {
+    if(_scrollVC.pager.hidden) {
         self.heightScrollViewConstraint.constant = 60.f;
     } else {
         self.heightScrollViewConstraint.constant = 80.f;
     }
     [self.view setNeedsUpdateConstraints];
 }
+
+- (void) displayContentController: (MHScrollVC*) content {
+    [self addChildViewController:content];
+    content.view.frame = CGRectMake(self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+    [self.scrollView addSubview:content.view];
+    content.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self createConstraints];
+    [content didMoveToParentViewController:self];
+}
+
+- (void)createConstraints
+{
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+                                                    attribute:NSLayoutAttributeTop
+                                                    relatedBy:NSLayoutRelationEqual
+                                                       toItem:self.scrollView
+                                                    attribute:NSLayoutAttributeTop
+                                                   multiplier:1
+                                                     constant:0]];
+
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+                                                                attribute:NSLayoutAttributeBottom
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.scrollView
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1
+                                                                 constant:0]];
+    
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+                                                                attribute:NSLayoutAttributeLeading
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.scrollView
+                                                                attribute:NSLayoutAttributeLeading
+                                                               multiplier:1
+                                                                 constant:0]];
+    
+    
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+                                                                attribute:NSLayoutAttributeTrailing
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.scrollView
+                                                                attribute:NSLayoutAttributeTrailing
+                                                               multiplier:1
+                                                                 constant:0]];
+    
+
+}
+
 /*
  #pragma mark - Navigation
  
