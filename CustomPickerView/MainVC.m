@@ -7,16 +7,16 @@
 //
 
 #import "MainVC.h"
-#import "MHScrollVC.h"
+#import "MHMenuViewController.h"
 #import "MHConfigure.h"
 #import "MHMenuModelItem.h"
 
-@interface MainVC () <MHScrollVCProtocol>
+@interface MainVC () <MHMenuVCProtocol>
 
-@property (weak, nonatomic) IBOutlet UIView *scrollView; // conteinerMeny
-@property (strong, nonatomic) MHScrollVC *scrollVC;
+@property (weak, nonatomic) IBOutlet UIView *containerMenu; // conteinerMeny
+@property (strong, nonatomic) MHMenuViewController *menuViewController;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightScrollViewConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightContainerMenuConstraint;
 
 @end
 
@@ -30,11 +30,11 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
-    self.scrollVC = [[MHScrollVC alloc]init];
-    self.scrollVC.arrayOfModels =[self createArrayOfModels];
-    [self displayContentController:_scrollVC];
+    self.menuViewController = [[MHMenuViewController alloc]init];
+    self.menuViewController.arrayOfModels =[self createArrayOfModels];
+    [self displayContentController:_menuViewController];
     [self shouldUpdatePageControl];
-    _scrollVC.delegate = self;
+    _menuViewController.delegate = self;
     
 }
 
@@ -53,20 +53,20 @@
 }
 
 - (void)shouldUpdatePageControl {
-    if(_scrollVC.pager.hidden) {
-        self.heightScrollViewConstraint.constant = 60.f; // like constant
+    if(_menuViewController.pager.hidden) {
+        self.heightContainerMenuConstraint.constant = 60.f; // like constant
     } else {
-        self.heightScrollViewConstraint.constant = 80.f;
+        self.heightContainerMenuConstraint.constant = 80.f;
     }
     [self.view setNeedsUpdateConstraints];
 }
 
 #pragma mark - Navigation methods
 
-- (void) displayContentController: (MHScrollVC*) content {
+- (void) displayContentController: (MHMenuViewController*) content {
     [self addChildViewController:content];
-    content.view.frame = CGRectMake(self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
-    [self.scrollView addSubview:content.view];
+    content.view.frame = CGRectMake(self.containerMenu.frame.origin.x, self.containerMenu.frame.origin.y, self.containerMenu.frame.size.width, self.containerMenu.frame.size.height);
+    [self.containerMenu addSubview:content.view];
     content.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self createConstraints];
     [content didMoveToParentViewController:self];
@@ -78,35 +78,35 @@
 {
 //    self.scrollVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+    [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
                                                     attribute:NSLayoutAttributeTop
                                                     relatedBy:NSLayoutRelationEqual
-                                                       toItem:self.scrollView
+                                                       toItem:self.containerMenu
                                                     attribute:NSLayoutAttributeTop
                                                    multiplier:1
                                                      constant:0]];
 
-    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+    [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
                                                                 attribute:NSLayoutAttributeBottom
                                                                 relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.scrollView
+                                                                   toItem:self.containerMenu
                                                                 attribute:NSLayoutAttributeBottom
                                                                multiplier:1
                                                                  constant:0]];
     
-    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+    [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
                                                                 attribute:NSLayoutAttributeLeading
                                                                 relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.scrollView
+                                                                   toItem:self.containerMenu
                                                                 attribute:NSLayoutAttributeLeading
                                                                multiplier:1
                                                                  constant:0]];
     
     
-    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.scrollVC.view
+    [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
                                                                 attribute:NSLayoutAttributeTrailing
                                                                 relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.scrollView
+                                                                   toItem:self.containerMenu
                                                                 attribute:NSLayoutAttributeTrailing
                                                                multiplier:1
                                                                  constant:0]];

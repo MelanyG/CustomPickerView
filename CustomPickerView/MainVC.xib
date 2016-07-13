@@ -7,8 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC">
             <connections>
-                <outlet property="heightScrollViewConstraint" destination="iIJ-mP-ASO" id="lmJ-bV-pJE"/>
-                <outlet property="scrollView" destination="7c2-5C-VZ9" id="DG1-L9-ncQ"/>
+                <outlet property="containerMenu" destination="7c2-5C-VZ9" id="jw3-bE-CNK"/>
+                <outlet property="heightContainerMenuConstraint" destination="iIJ-mP-ASO" id="pXw-L7-rbX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="mgq-Y0-ool" id="KzD-qg-LNt"/>
             </connections>

@@ -6,13 +6,13 @@
 //  Copyright © 2016 Melaniia Hulianovych. All rights reserved.
 //
 
-#import "MHScrollVC.h"
+#import "MHMenuViewController.h"
 #import "Downloader.h"
 #import "MHMenuCell.h"
 #import "MHConfigure.h"
 #import "MHMenuModelItem.h"
 
-@interface MHScrollVC () {
+@interface MHMenuViewController () {
     BOOL _isFirst;
 }
 @property (strong, nonatomic) NSIndexPath *activeIndex;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation MHScrollVC
+@implementation MHMenuViewController
 
 
 
@@ -30,7 +30,7 @@
     self = [super init];
     if (self != nil)
     {
-        self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHScrollVC" owner:self options:nil] objectAtIndex:0];
+        self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHMenuViewController" owner:self options:nil] objectAtIndex:0];
         [self.collectionView registerNib:[UINib nibWithNibName:@"MHMenuCell" bundle:nil] forCellWithReuseIdentifier:@"MenuCell"];//menuCell
         self.view.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];

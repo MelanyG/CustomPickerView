@@ -5,16 +5,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MHScrollVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MHMenuViewController">
             <connections>
-                <outlet property="collectionView" destination="XYP-xB-M1w" id="ygK-RF-LwS"/>
-                <outlet property="customLayout" destination="beV-74-VJ9" id="Uc7-Qr-AOx"/>
-                <outlet property="pager" destination="cMa-V8-LnR" id="n2U-T8-URW"/>
-                <outlet property="pagerWidthConstraint" destination="Z6W-YL-x3b" id="HWC-zU-CDN"/>
+                <outlet property="collectionView" destination="XYP-xB-M1w" id="cWa-i2-vEo"/>
+                <outlet property="customLayout" destination="beV-74-VJ9" id="RiV-po-1sb"/>
+                <outlet property="pager" destination="cMa-V8-LnR" id="TPB-im-4UC"/>
+                <outlet property="pagerHeightConstraint" destination="Z6W-YL-x3b" id="f7i-jT-ews"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="P03-UI-Lia" customClass="MHScrollView">
+        <view contentMode="scaleToFill" id="P03-UI-Lia">
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>

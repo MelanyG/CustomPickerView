@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MHCollectionViewLayout.h"
 
-@protocol MHScrollVCProtocol <NSObject>
+@protocol MHMenuVCProtocol <NSObject>
 
 - (void)didSelectCell:(NSInteger)selectedCell;
 - (void)shouldUpdatePageControl;
@@ -17,16 +17,16 @@
 @end
 
 
-@interface MHScrollVC : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MHMenuViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic) id <MHScrollVCProtocol> delegate;
+@property (weak, nonatomic) id <MHMenuVCProtocol> delegate;
 @property (strong, nonatomic) NSArray *arrayOfModels;
 @property (strong, nonatomic) NSMutableDictionary *swipeModelItems;
 @property (strong, nonatomic) NSString *associatedWith;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pager;
 @property (weak, nonatomic) IBOutlet MHCollectionViewLayout *customLayout;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pagerWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pagerHeightConstraint;
 
 - (id)init;
 
