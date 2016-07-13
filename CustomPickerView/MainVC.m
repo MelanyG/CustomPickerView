@@ -11,6 +11,9 @@
 #import "MHConfigure.h"
 #import "MHMenuModelItem.h"
 
+CGFloat const InvisiblePagerConstant = 60.f;
+CGFloat const VisiblePagerConstant = 80.f;
+
 @interface MainVC () <MHMenuVCProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *containerMenu; // conteinerMeny
@@ -31,9 +34,8 @@
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
     self.menuViewController = [[MHMenuViewController alloc]init];
-    self.menuViewController.arrayOfModels =[self createArrayOfModels];
     [self displayContentController:_menuViewController];
-    [self shouldUpdatePageControl];
+    [self updateMenuController];
     _menuViewController.delegate = self;
     
 }
@@ -41,6 +43,18 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UpdateMenuController
+
+- (void)updateMenuController {
+    self.menuViewController.arrayOfModels =[self createArrayOfModels];
+    self.menuViewController.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
+    self.menuViewController.inactivePageDotColor = [[MHConfigure sharedConfiguration]inactivePageDotColor];
+    self.menuViewController.activePageDotColor = [[MHConfigure sharedConfiguration]activePageDotColor];
+    [self.menuViewController updateAll];
+    [self shouldUpdateHeighOfMenuContainer];
+    
 }
 
 #pragma mark - Delegate methods ///TAble  ???
@@ -52,11 +66,11 @@
     [_webView loadRequest:urlRequest];
 }
 
-- (void)shouldUpdatePageControl {
+- (void)shouldUpdateHeighOfMenuContainer {
     if(_menuViewController.pager.hidden) {
-        self.heightContainerMenuConstraint.constant = 60.f; // like constant
+        self.heightContainerMenuConstraint.constant = InvisiblePagerConstant; // like constant
     } else {
-        self.heightContainerMenuConstraint.constant = 80.f;
+        self.heightContainerMenuConstraint.constant = VisiblePagerConstant;
     }
     [self.view setNeedsUpdateConstraints];
 }
@@ -76,42 +90,42 @@
 
 - (void)createConstraints
 {
-//    self.scrollVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    //    self.scrollVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
-                                                    attribute:NSLayoutAttributeTop
-                                                    relatedBy:NSLayoutRelationEqual
-                                                       toItem:self.containerMenu
-                                                    attribute:NSLayoutAttributeTop
-                                                   multiplier:1
-                                                     constant:0]];
-
-    [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
-                                                                attribute:NSLayoutAttributeBottom
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.containerMenu
-                                                                attribute:NSLayoutAttributeBottom
-                                                               multiplier:1
-                                                                 constant:0]];
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.containerMenu
+                                                                   attribute:NSLayoutAttributeTop
+                                                                  multiplier:1
+                                                                    constant:0]];
     
     [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
-                                                                attribute:NSLayoutAttributeLeading
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.containerMenu
-                                                                attribute:NSLayoutAttributeLeading
-                                                               multiplier:1
-                                                                 constant:0]];
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.containerMenu
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1
+                                                                    constant:0]];
+    
+    [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
+                                                                   attribute:NSLayoutAttributeLeading
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.containerMenu
+                                                                   attribute:NSLayoutAttributeLeading
+                                                                  multiplier:1
+                                                                    constant:0]];
     
     
     [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
-                                                                attribute:NSLayoutAttributeTrailing
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.containerMenu
-                                                                attribute:NSLayoutAttributeTrailing
-                                                               multiplier:1
-                                                                 constant:0]];
+                                                                   attribute:NSLayoutAttributeTrailing
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.containerMenu
+                                                                   attribute:NSLayoutAttributeTrailing
+                                                                  multiplier:1
+                                                                    constant:0]];
     
-
+    
 }
 
 - (NSArray *)createArrayOfModels {
@@ -121,7 +135,7 @@
         MHMenuModelItem *item = [[MHMenuModelItem alloc]init];
         item.stationID = [[MHConfigure sharedConfiguration]stationID];
         item.inActiveThumbnnailUrl = [MHConfigure sharedConfiguration].dataSourceArray[i];
-       item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
+        item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
         if(i == 0) {
             item.isSplitter = NO;
         } else {
@@ -129,7 +143,7 @@
         }
         arrayOfModels[i] = item;
     }
-     return arrayOfModels;
+    return arrayOfModels;
 }
 
 

@@ -10,7 +10,8 @@
 #import "MHConfigure.h"
 
 static NSString * const MHCollectionViewLayoutCellKind = @"TestCell";
-
+CGFloat const CollectionViewHeightConstant = 60.f;
+CGFloat const CollectionViewItemHeightConstant = 50.f;
 
 typedef enum
 {
@@ -53,7 +54,7 @@ SwipeViewAlignment;
 - (void)setup
 {
     self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
-    self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, 50.0f);
+    self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, CollectionViewItemHeightConstant);
     [self getMaxNumberOfElements];
     self.numberOfElemets = [MHConfigure sharedConfiguration].numberOfElements;
     
@@ -69,11 +70,11 @@ SwipeViewAlignment;
     NSInteger dimension = [self getDimentionToGetWidth];
     NSInteger width = dimension / self.maxElements - 0.f;
     if(self.numberOfElemets >=  self.maxElements) {
-        self.itemSize = CGSizeMake(width, 50.f);
+        self.itemSize = CGSizeMake(width, CollectionViewItemHeightConstant);
         CGFloat originX = ([UIScreen mainScreen].bounds.size.width - width * self.maxElements) / 2;
         self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 5.0f, 5.0f);
     } else  {
-        self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, 50.f);
+        self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, CollectionViewItemHeightConstant);
     }
     for (NSInteger item = 0; item < self.numberOfElemets; item++) {
         indexPath = [NSIndexPath indexPathForItem:item inSection:0];
@@ -133,8 +134,8 @@ SwipeViewAlignment;
 
 - (CGSize)collectionViewContentSize
 {
-     CGFloat height = 60.0f;
-    return CGSizeMake(self.numberOfElemets * self.itemSize.width + _spacingX * (self.numberOfElemets) , height);
+     CGFloat height = CollectionViewHeightConstant;
+    return CGSizeMake(self.numberOfElemets * self.itemSize.width + _spacingX , height);
 }
 
 - (void)getMaxNumberOfElements

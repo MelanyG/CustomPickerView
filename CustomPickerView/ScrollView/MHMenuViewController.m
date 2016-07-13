@@ -28,18 +28,12 @@
 
 -(id)init {
     self = [super init];
-    if (self != nil)
-    {
+    if (self != nil) {
         self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHMenuViewController" owner:self options:nil] objectAtIndex:0];
         [self.collectionView registerNib:[UINib nibWithNibName:@"MHMenuCell" bundle:nil] forCellWithReuseIdentifier:@"MenuCell"];//menuCell
-        self.view.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self selector:@selector(orientationChanged:)
-         name:UIDeviceOrientationDidChangeNotification
-         object:[UIDevice currentDevice]];
-        
-        [self updatePageControl]; /// remove
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+        [self.collectionView setShowsHorizontalScrollIndicator:NO];
         _isFirst = YES; //remove 6
         self.preset = [WTURLImageViewPreset defaultPreset];
         WTURLImageViewOptions options = self.preset.options;
@@ -51,50 +45,45 @@
 }
 
 
-- (void) orientationChanged:(NSNotification *)note
-{
+- (void) orientationChanged:(NSNotification *)note {
     UIDeviceOrientation interfaceOrientation = [[note object] orientation];
     if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait || interfaceOrientation == UIDeviceOrientationPortraitUpsideDown) {
         [self.customLayout setup];
         [self.collectionView reloadData];
-        [self updatePageControl];
-        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdatePageControl)]) {
-            [_delegate shouldUpdatePageControl];
+        [self updateAll];
+        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
+            [_delegate shouldUpdateHeighOfMenuContainer];
         }
-        
     }
+}
+
+#pragma mark - UpdateController method
+
+- (void)updateAll {
+    self.view.backgroundColor = self.backgroundColor;
+    [self updatePageControl];
 }
 
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [_arrayOfModels count];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-              cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * const CellIdentifier = @"MenuCell";
     
     MHMenuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     MHMenuModelItem *modelItem = _arrayOfModels[indexPath.item];
-    if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil)
-    {
+    if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil) {
         
-    }
-    else
-    {
-        if ([self.activeIndex isEqual:indexPath])
-        {
-         [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
-          }
-        else
-        {
+    } else {
+        if ([self.activeIndex isEqual:indexPath]) {
+            [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
+        } else {
             [cell.imageContainer setURL:[NSURL URLWithString:modelItem.inActiveThumbnnailUrl] withPreset:self.preset];
         }
     }
@@ -111,14 +100,11 @@
     
     [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
     MHMenuModelItem *modelItem = _arrayOfModels[indexPath.item];
-
-    if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil)
-    {
+    
+    if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil) {
         //TO-DO
-    }
-    else
-    {
-       [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
+    } else {
+        [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
         
     }
     if(_delegate && [_delegate respondsToSelector:@selector(didSelectCell:)]) {
@@ -183,16 +169,16 @@
     [self.pager updateCurrentPageDisplay];
 }
 
+#pragma mark - PageControll methods
 
-- (void)updatePageControl
-{
+- (void)updatePageControl {
     if(self.customLayout.maxElements >= self.customLayout.numberOfElemets) {
         self.pager.hidden = YES;
     } else {
         self.pager.hidden = NO;
         self.pager.hidesForSinglePage = YES;
-        self.pager.pageIndicatorTintColor = [MHConfigure sharedConfiguration].inactivePageDotColor;
-        self.pager.currentPageIndicatorTintColor = [MHConfigure sharedConfiguration].activePageDotColor;
+        self.pager.pageIndicatorTintColor = self.inactivePageDotColor;
+        self.pager.currentPageIndicatorTintColor = self.activePageDotColor;
         self.pager.defersCurrentPageDisplay = YES;
         CGFloat allPages = self.customLayout.numberOfElemets /self.customLayout.maxElements;
         CGFloat decimalPart = self.customLayout.numberOfElemets % self.customLayout.maxElements;
@@ -202,7 +188,6 @@
             self.pager.numberOfPages = allPages;
         }
     }
-    
 }
 
 -(void) dealloc {
