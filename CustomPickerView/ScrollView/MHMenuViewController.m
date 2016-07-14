@@ -39,7 +39,7 @@
         _initialScrollDone = NO; //remove 6
         self.preset = [WTURLImageViewPreset defaultPreset];
         WTURLImageViewOptions options = self.preset.options;
-        options &= ~ (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground);
+        options |= (WTURLImageViewOptionShowActivityIndicator | WTURLImageViewOptionAnimateEvenCache | WTURLImageViewOptionsLoadDiskCacheInBackground | WTURLImageViewOptionDontClearImageBeforeLoading);
         self.preset.options = options;
         self.preset.fillType = UIImageResizeFillTypeFitIn;
     }
@@ -107,9 +107,12 @@
     MHMenuModelItem *modelItem = _arrayOfModels[indexPath.item];
     if (modelItem.activeThumbnnailUrl == nil || modelItem.inActiveThumbnnailUrl == nil) {
         cell.imageContainer.hidden = YES;
-        //cell.textLable.hidden = NO;
+        cell.textLable.hidden = NO;
         cell.textLable.text = modelItem.textForLable;
     } else {
+        cell.imageContainer.hidden = NO;
+        cell.textLable.hidden = YES;
+
         if ([self.activeIndex isEqual:indexPath]) {
             [cell.imageContainer setURL:[NSURL URLWithString:modelItem.activeThumbnnailUrl] withPreset:self.preset];
         } else {

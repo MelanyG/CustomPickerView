@@ -13,6 +13,7 @@
 
 CGFloat const InvisiblePagerConstant = 60.f;
 CGFloat const VisiblePagerConstant = 80.f;
+NSString *const HTTP = @"http";
 
 @interface MainVC () <MHMenuVCProtocol>
 
@@ -135,10 +136,13 @@ CGFloat const VisiblePagerConstant = 80.f;
     NSInteger count = [[MHConfigure sharedConfiguration]numberOfElements];
     for(int i = 0; i < count; i++) {
         MHMenuModelItem *item = [[MHMenuModelItem alloc]init];
+        if ([[MHConfigure sharedConfiguration].dataSourceArray[i] containsString:HTTP]) {
+            item.inActiveThumbnnailUrl = [MHConfigure sharedConfiguration].dataSourceArray[i];
+            item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
+        } else {
+            item.textForLable = [MHConfigure sharedConfiguration].dataSourceArray[i];
+        }
         item.stationID = [[MHConfigure sharedConfiguration]stationID];
-        item.inActiveThumbnnailUrl = [MHConfigure sharedConfiguration].dataSourceArray[i];
-        item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
-       // item.textForLable = [MHConfigure sharedConfiguration].dataSourceArray[i];
         if(i == 0) {
             item.isSplitter = NO;
         } else {
