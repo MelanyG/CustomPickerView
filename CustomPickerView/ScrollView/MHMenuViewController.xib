@@ -82,12 +82,12 @@
                     <include reference="cMa-V8-LnR"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="PgS-Mb-WZ2"/>
-                    <include reference="nDq-mJ-R8C"/>
-                    <include reference="fk5-8s-98z"/>
-                    <include reference="fhb-kR-M1b"/>
                     <include reference="XiK-lO-ghD"/>
+                    <include reference="fhb-kR-M1b"/>
                     <include reference="vma-XX-z3C"/>
+                    <include reference="PgS-Mb-WZ2"/>
+                    <include reference="fk5-8s-98z"/>
+                    <include reference="nDq-mJ-R8C"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=regular">
@@ -96,12 +96,12 @@
                     <include reference="cMa-V8-LnR"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="PgS-Mb-WZ2"/>
-                    <include reference="nDq-mJ-R8C"/>
-                    <include reference="fk5-8s-98z"/>
-                    <include reference="fhb-kR-M1b"/>
                     <include reference="XiK-lO-ghD"/>
+                    <include reference="fhb-kR-M1b"/>
                     <include reference="vma-XX-z3C"/>
+                    <include reference="PgS-Mb-WZ2"/>
+                    <include reference="fk5-8s-98z"/>
+                    <include reference="nDq-mJ-R8C"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="479" y="239"/>

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet WTURLImageView *imageContainer;
 @property (weak, nonatomic) IBOutlet UIView *splitter;
 @property (assign, nonatomic) NSInteger cellIndex;
+@property (weak, nonatomic) IBOutlet UILabel *textLable;
 
 - (void)setVisibleSplitter:(NSInteger)index;
 

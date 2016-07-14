@@ -13,6 +13,12 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
                 <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUr-D5-RfY">
+                        <rect key="frame" x="2" y="10" width="204" height="118"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="TestCell" translatesAutoresizingMaskIntoConstraints="NO" id="cLl-mk-lTe" customClass="WTURLImageView">
                         <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
                     </imageView>
@@ -29,18 +35,23 @@
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="cLl-mk-lTe" secondAttribute="bottom" id="2Yb-tN-Y98"/>
+                <constraint firstItem="bUr-D5-RfY" firstAttribute="leading" secondItem="Pwr-57-YLF" secondAttribute="trailing" id="5KW-UP-Y0k"/>
                 <constraint firstItem="cLl-mk-lTe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GiW-sV-7fS"/>
+                <constraint firstItem="bUr-D5-RfY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="O5Y-1f-P8C"/>
                 <constraint firstItem="Pwr-57-YLF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="R1g-be-Oyq"/>
+                <constraint firstAttribute="trailing" secondItem="bUr-D5-RfY" secondAttribute="trailing" id="R2m-cP-4Od"/>
                 <constraint firstItem="cLl-mk-lTe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="SrN-29-DN8"/>
                 <constraint firstItem="Pwr-57-YLF" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="XMy-Fo-BWu"/>
+                <constraint firstAttribute="bottom" secondItem="bUr-D5-RfY" secondAttribute="bottom" constant="10" id="dDS-QH-ghC"/>
                 <constraint firstAttribute="trailing" secondItem="cLl-mk-lTe" secondAttribute="trailing" id="wnD-G6-vSJ"/>
             </constraints>
             <size key="customSize" width="206" height="138"/>
             <connections>
                 <outlet property="imageContainer" destination="cLl-mk-lTe" id="XLc-FD-Pe4"/>
                 <outlet property="splitter" destination="Pwr-57-YLF" id="vov-pu-HHn"/>
+                <outlet property="textLable" destination="bUr-D5-RfY" id="mFs-fg-CPx"/>
             </connections>
-            <point key="canvasLocation" x="467" y="222"/>
+            <point key="canvasLocation" x="110" y="298"/>
         </collectionViewCell>
     </objects>
 </document>

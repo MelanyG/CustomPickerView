@@ -16,7 +16,7 @@
  *   @param indexpath of cell in collection view which is centered.
  */
 - (void)currentPage:(NSInteger)page;
-//- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout cellCenteredAtIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 

@@ -74,7 +74,7 @@ CGFloat const VisiblePagerConstant = 80.f;
         self.heightContainerMenuConstraint.constant = VisiblePagerConstant;
     }
     [self.view setNeedsUpdateConstraints];
- 
+    
 }
 
 #pragma mark - Navigation methods
@@ -138,6 +138,7 @@ CGFloat const VisiblePagerConstant = 80.f;
         item.stationID = [[MHConfigure sharedConfiguration]stationID];
         item.inActiveThumbnnailUrl = [MHConfigure sharedConfiguration].dataSourceArray[i];
         item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
+       // item.textForLable = [MHConfigure sharedConfiguration].dataSourceArray[i];
         if(i == 0) {
             item.isSplitter = NO;
         } else {
