@@ -47,6 +47,7 @@
 }
 
 - (void)currentPage:(NSInteger)page {
+    NSLog(@"Delegate");
     self.pager.currentPage = page;
 }
 
