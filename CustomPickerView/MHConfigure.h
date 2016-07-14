@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSMutableArray *dataSourceArray;
 @property (strong, nonatomic) NSString *activeChannelLogoURL;
 @property (assign, nonatomic) NSInteger stationID;
+@property (assign, nonatomic) NSInteger activeStation;
 
 + (MHConfigure *)sharedConfiguration;
 

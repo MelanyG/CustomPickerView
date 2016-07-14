@@ -52,6 +52,7 @@ CGFloat const VisiblePagerConstant = 80.f;
     self.menuViewController.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
     self.menuViewController.inactivePageDotColor = [[MHConfigure sharedConfiguration]inactivePageDotColor];
     self.menuViewController.activePageDotColor = [[MHConfigure sharedConfiguration]activePageDotColor];
+    self.menuViewController.activeIndex = [NSIndexPath indexPathForItem:[[MHConfigure sharedConfiguration]activeStation] inSection:0];
     [self.menuViewController updateAll];
     [self shouldUpdateHeighOfMenuContainer];
     
@@ -73,6 +74,7 @@ CGFloat const VisiblePagerConstant = 80.f;
         self.heightContainerMenuConstraint.constant = VisiblePagerConstant;
     }
     [self.view setNeedsUpdateConstraints];
+ 
 }
 
 #pragma mark - Navigation methods

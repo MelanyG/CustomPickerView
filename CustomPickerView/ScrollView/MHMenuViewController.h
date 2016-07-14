@@ -17,7 +17,7 @@
 @end
 
 
-@interface MHMenuViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MHMenuViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, CustomViewFlowLayoutDelegate>
 
 @property (weak, nonatomic) id <MHMenuVCProtocol> delegate;
 @property (strong, nonatomic) NSArray *arrayOfModels;
@@ -28,6 +28,8 @@
 @property (nonatomic, retain) UIColor *backgroundColor;
 @property (nonatomic, retain) UIColor *activePageDotColor;
 @property (nonatomic, retain) UIColor *inactivePageDotColor;
+@property (assign, nonatomic) BOOL initialScrollDone;
+@property (strong, nonatomic) NSIndexPath *activeIndex;
 
 - (id)init;
 - (void)updateAll;

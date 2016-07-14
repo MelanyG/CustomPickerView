@@ -9,7 +9,7 @@
 #import "MHCollectionViewLayout.h"
 #import "MHConfigure.h"
 
-static NSString * const MHCollectionViewLayoutCellKind = @"TestCell";
+static NSString * const MHCollectionViewLayoutCellKind = @"MenuCell";
 CGFloat const CollectionViewHeightConstant = 60.f;
 CGFloat const CollectionViewItemHeightConstant = 50.f;
 
@@ -84,19 +84,23 @@ SwipeViewAlignment;
         itemAttributes.frame = [self frameForAlbumPhotoAtIndexPath:indexPath];
         cellLayoutInfo[indexPath] = itemAttributes;
     }
-    
+
     
     newLayoutInfo[MHCollectionViewLayoutCellKind] = cellLayoutInfo;
     
     self.layoutInfo = newLayoutInfo;
 }
 
-
+- (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger itemNumber = indexPath.item + self.maxElements/2;
+    NSIndexPath *newIndex = [NSIndexPath indexPathForItem:itemNumber inSection:indexPath.section];
+    [self.delegate currentPage:indexPath.item / self.maxElements];
+    return self.layoutInfo[MHCollectionViewLayoutCellKind][newIndex];
+}
 
 #pragma mark - Private
 
-- (CGRect)frameForAlbumPhotoAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGRect)frameForAlbumPhotoAtIndexPath:(NSIndexPath *)indexPath {
     
     _spacingX = self.itemInsets.left;
     CGFloat originX;
@@ -109,9 +113,14 @@ SwipeViewAlignment;
     originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left;
     }
     CGFloat originY =  self.itemInsets.bottom;
-    
+    NSLog(@"rect1: %@", NSStringFromCGRect(CGRectMake(originX, originY, self.itemSize.width, self.itemSize.height)));
+
     return CGRectMake(originX, originY, self.itemSize.width, self.itemSize.height);
 }
+
+//- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {
+//    return YES;
+//}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
@@ -174,7 +183,7 @@ SwipeViewAlignment;
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
         {
-            return [UIScreen mainScreen].bounds.size.width;
+             return [UIScreen mainScreen].bounds.size.width;
         }
         else
         {
