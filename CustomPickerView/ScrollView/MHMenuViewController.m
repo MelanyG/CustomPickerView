@@ -32,8 +32,8 @@
     if (self != nil) {
         self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHMenuViewController" owner:self options:nil] objectAtIndex:0];
         [self.collectionView registerNib:[UINib nibWithNibName:@"MHMenuCell" bundle:nil] forCellWithReuseIdentifier:@"MenuCell"];//menuCell
-        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+       // [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
         [self.collectionView setShowsHorizontalScrollIndicator:NO];
         self.customLayout.delegate = self;
         _initialScrollDone = NO; //remove 6
@@ -64,24 +64,33 @@
             [_delegate didSelectCell:self.activeIndex.item];
         }
     }
+    if(self.rotateIndex) {
+        self.rotateIndex = NO;
+        [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+        [self updateAll];
+        
+        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
+            [_delegate shouldUpdateHeighOfMenuContainer];
+        }
+    }
 }
 
 
 - (void) orientationChanged:(NSNotification *)note {
-    UIDeviceOrientation interfaceOrientation = [[note object] orientation];
+   UIDeviceOrientation interfaceOrientation = [[UIDevice currentDevice] orientation];
     if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait || interfaceOrientation == UIDeviceOrientationPortraitUpsideDown) {
         CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
         CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
         self.rotateIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
         self.rotateIndex = YES;
         [self.collectionView reloadData];
-        
-        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
-            [_delegate shouldUpdateHeighOfMenuContainer];
-        }
-        
-        [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
-        [self updateAll];
+//        
+//        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
+//            [_delegate shouldUpdateHeighOfMenuContainer];
+//        }
+//        
+//        [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+//        [self updateAll];
         
     }
 }
