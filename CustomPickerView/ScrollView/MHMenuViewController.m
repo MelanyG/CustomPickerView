@@ -189,7 +189,7 @@
     if(size > self.customLayout.maxElements) {
         if (self.lastContentOffset < scrollView.contentOffset.x) {
             // moved right
-            visibleElement =[(NSIndexPath *)results[0]item];
+            visibleElement =[(NSIndexPath *)results[size-1]item];
             allPages = visibleElement /self.customLayout.maxElements;
             decimalPart = visibleElement % self.customLayout.maxElements;
             if(visibleElement == self.customLayout.numberOfElemets || decimalPart == 0) {
