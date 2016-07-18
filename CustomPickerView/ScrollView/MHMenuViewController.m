@@ -192,12 +192,12 @@
             visibleElement =[(NSIndexPath *)results[size-1]item];
             allPages = visibleElement /self.customLayout.maxElements;
             decimalPart = visibleElement % self.customLayout.maxElements;
-            if(visibleElement == self.customLayout.numberOfElemets || decimalPart == 0) {
+//            if(visibleElement == self.customLayout.numberOfElemets || decimalPart == 0) {
                 self.pager.currentPage = allPages;
-            } else {
-                
-                self.pager.currentPage = allPages +1;
-            }
+//            } else {
+//                
+//                self.pager.currentPage = allPages +1;
+//            }
         } else if (self.lastContentOffset > scrollView.contentOffset.x) {
             // moved left
             if([(NSIndexPath *)results[0]item] == 0) {

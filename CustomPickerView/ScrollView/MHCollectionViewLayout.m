@@ -97,7 +97,7 @@ SwipeViewAlignment;
         itemNumber -=1;
     }
     NSIndexPath *newIndex = [NSIndexPath indexPathForItem:itemNumber inSection:indexPath.section];
-    [self.delegate currentPage:indexPath.item / self.maxElements];
+    [self.delegate currentPage:newIndex.item / self.maxElements];
     NSLog(@"%ld", (long)newIndex.item);
     return self.layoutInfo[MHCollectionViewLayoutCellKind][newIndex];
 }
