@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MHMenuModelItem : NSObject //MHmenyModelItem
+
+@interface MHMenuModelItem : NSObject 
 
 @property (assign, nonatomic) NSInteger stationID;
 @property (strong, nonatomic) NSString *activeThumbnnailUrl;
 @property (strong, nonatomic) NSString *inActiveThumbnnailUrl;
 @property (strong, nonatomic) NSString *textForLable;
-@property (assign, nonatomic) BOOL isSplitter;
 
 @end

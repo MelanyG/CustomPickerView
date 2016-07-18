@@ -11,55 +11,50 @@
 #import "MHConfigure.h"
 #import "MHMenuModelItem.h"
 
-CGFloat const InvisiblePagerConstant = 60.f;
-CGFloat const VisiblePagerConstant = 80.f;
-NSString *const HTTP = @"http";
 
-@interface MainVC () <MHMenuVCProtocol>
+CGFloat const kInvisiblePagerConstant = 60.f;
+CGFloat const kVisiblePagerConstant = 80.f;
+NSString *const kHTTP = @"http";
 
-@property (weak, nonatomic) IBOutlet UIView *containerMenu; // conteinerMeny
+
+@interface MainVC () <MHMenuViewControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UIView *containerMenu;
 @property (strong, nonatomic) MHMenuViewController *menuViewController;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightContainerMenuConstraint;
 
 @end
 
+
 @implementation MainVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
     self.navigationItem.title = @"Test";
     NSString *urlString = @"http://wallfon.com/nature/volcano-ash-storm-lightning-natural-disaster.html";
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];
-    self.menuViewController = [[MHMenuViewController alloc]init];
-    [self displayContentController:_menuViewController];
+    self.menuViewController = [[MHMenuViewController alloc]initWithArray:[self createArrayOfModels]];
+    [self displayContentController:self.menuViewController];
     [self updateMenuController];
-    _menuViewController.delegate = self;
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.menuViewController.delegate = self;
 }
 
 #pragma mark - UpdateMenuController
 
 - (void)updateMenuController {
-    self.menuViewController.arrayOfModels =[self createArrayOfModels];
     self.menuViewController.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
     self.menuViewController.inactivePageDotColor = [[MHConfigure sharedConfiguration]inactivePageDotColor];
     self.menuViewController.activePageDotColor = [[MHConfigure sharedConfiguration]activePageDotColor];
     self.menuViewController.activeIndex = [NSIndexPath indexPathForItem:[[MHConfigure sharedConfiguration]activeStation] inSection:0];
     [self.menuViewController updateAll];
     [self shouldUpdateHeighOfMenuContainer];
-    
 }
 
-#pragma mark - Delegate methods ///TAble  ???
+#pragma mark - MenuController Delegate methods
 
 - (void)didSelectCell:(NSInteger)selectedCell {
     NSString *urlString = [MHConfigure sharedConfiguration].dataSourceArray[selectedCell];
@@ -69,14 +64,13 @@ NSString *const HTTP = @"http";
 }
 
 - (void)shouldUpdateHeighOfMenuContainer {
-    if(_menuViewController.pager.hidden) {
-        self.heightContainerMenuConstraint.constant = InvisiblePagerConstant; // like constant
+    if(self.menuViewController.pager.hidden) {
+        self.heightContainerMenuConstraint.constant = kInvisiblePagerConstant;
     } else {
-        self.heightContainerMenuConstraint.constant = VisiblePagerConstant;
+        self.heightContainerMenuConstraint.constant = kVisiblePagerConstant;
     }
     [self.view setNeedsUpdateConstraints];
-    
-}
+ }
 
 #pragma mark - Navigation methods
 
@@ -91,10 +85,7 @@ NSString *const HTTP = @"http";
 
 #pragma mark - Private methods
 
-- (void)createConstraints
-{
-    //    self.scrollVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
+- (void)createConstraints {
     [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
                                                                    attribute:NSLayoutAttributeTop
                                                                    relatedBy:NSLayoutRelationEqual
@@ -119,7 +110,6 @@ NSString *const HTTP = @"http";
                                                                   multiplier:1
                                                                     constant:0]];
     
-    
     [self.containerMenu addConstraint:[NSLayoutConstraint constraintWithItem:self.menuViewController.view
                                                                    attribute:NSLayoutAttributeTrailing
                                                                    relatedBy:NSLayoutRelationEqual
@@ -127,8 +117,6 @@ NSString *const HTTP = @"http";
                                                                    attribute:NSLayoutAttributeTrailing
                                                                   multiplier:1
                                                                     constant:0]];
-    
-    
 }
 
 - (NSArray *)createArrayOfModels {
@@ -136,18 +124,13 @@ NSString *const HTTP = @"http";
     NSInteger count = [[MHConfigure sharedConfiguration]numberOfElements];
     for(int i = 0; i < count; i++) {
         MHMenuModelItem *item = [[MHMenuModelItem alloc]init];
-        if ([[MHConfigure sharedConfiguration].dataSourceArray[i] containsString:HTTP]) {
+        if ([[MHConfigure sharedConfiguration].dataSourceArray[i] containsString:kHTTP]) {
             item.inActiveThumbnnailUrl = [MHConfigure sharedConfiguration].dataSourceArray[i];
             item.activeThumbnnailUrl = [MHConfigure sharedConfiguration].activeChannelLogoURL;
         } else {
             item.textForLable = [MHConfigure sharedConfiguration].dataSourceArray[i];
         }
         item.stationID = [[MHConfigure sharedConfiguration]stationID];
-        if(i == 0) {
-            item.isSplitter = NO;
-        } else {
-            item.isSplitter = YES;
-        }
         arrayOfModels[i] = item;
     }
     return arrayOfModels;

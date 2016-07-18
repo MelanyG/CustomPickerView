@@ -8,16 +8,14 @@
 
 #import "MHMenuCell.h"
 
+
 @implementation MHMenuCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-
 }
 
-
-- (void)setVisibleSplitter:(NSInteger)index
-{
+- (void)setVisibleSplitter:(NSInteger)index {
     if(index == 0) {
         self.splitter.hidden = YES;
         return;
@@ -28,8 +26,7 @@
     }
 }
 
-- (void)prepareForReuse
-{
+- (void)prepareForReuse {
     [super prepareForReuse];
     
     self.imageContainer.image = nil;

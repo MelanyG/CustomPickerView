@@ -8,20 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CustomViewFlowLayoutDelegate <NSObject>
 
-/** Informs delegate about location of centered cell in grid.
- *  Delegate should use this location 'indexPath' information to
- *   adjust it's conten associated with this cell.
- *   @param indexpath of cell in collection view which is centered.
- */
+@protocol MHCollectionViewLayoutDelegate <NSObject>
+
 - (void)currentPage:(NSInteger)page;
 
 @end
 
 
 @interface MHCollectionViewLayout : UICollectionViewLayout
-@property (nonatomic, weak) id<CustomViewFlowLayoutDelegate> delegate;
+
+@property (nonatomic, weak) id<MHCollectionViewLayoutDelegate> delegate;
 @property (nonatomic) UIEdgeInsets itemInsets;
 @property (nonatomic) CGSize itemSize;
 @property (nonatomic) NSInteger maxElements;

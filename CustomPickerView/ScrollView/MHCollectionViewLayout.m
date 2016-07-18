@@ -9,16 +9,17 @@
 #import "MHCollectionViewLayout.h"
 #import "MHConfigure.h"
 
-static NSString * const MHCollectionViewLayoutCellKind = @"MenuCell";
-CGFloat const CollectionViewHeightConstant = 60.f;
-CGFloat const CollectionViewItemHeightConstant = 50.f;
 
-typedef enum
-{
+static NSString * const kMHCollectionViewLayoutCellKind = @"MenuCell";
+static CGFloat const kCollectionViewHeightConstant = 60.f;
+static CGFloat const kCollectionViewItemHeightConstant = 50.f;
+
+typedef enum {
     SwipeViewAlignmentEdge = 0,
     SwipeViewAlignmentCenter
 }
 SwipeViewAlignment;
+
 
 @interface MHCollectionViewLayout ()
 
@@ -27,41 +28,19 @@ SwipeViewAlignment;
 
 @end
 
+
 @implementation MHCollectionViewLayout
 
 #pragma mark - Lifecycle
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self setup];
-    }
-    
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super init];
-    if (self) {
-        [self setup];
-    }
-    
-    return self;
-}
-
-- (void)setup
-{
+- (void)setup {
     self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
-    self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, CollectionViewItemHeightConstant);
+    self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, kCollectionViewItemHeightConstant);
     [self getMaxNumberOfElements];
-    self.numberOfElemets = [MHConfigure sharedConfiguration].numberOfElements;
-    
+    self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
 }
 
-- (void)prepareLayout
-{
+- (void)prepareLayout {
     NSMutableDictionary *newLayoutInfo = [NSMutableDictionary dictionary];
     NSMutableDictionary *cellLayoutInfo = [NSMutableDictionary dictionary];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
@@ -70,11 +49,11 @@ SwipeViewAlignment;
     NSInteger dimension = [self getDimentionToGetWidth];
     NSInteger width = dimension / self.maxElements - 0.f;
     if(self.numberOfElemets >=  self.maxElements) {
-        self.itemSize = CGSizeMake(width, CollectionViewItemHeightConstant);
+        self.itemSize = CGSizeMake(width, kCollectionViewItemHeightConstant);
         CGFloat originX = ([UIScreen mainScreen].bounds.size.width - width * self.maxElements) / 2;
         self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 5.0f, 5.0f);
     } else  {
-        self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, CollectionViewItemHeightConstant);
+        self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, kCollectionViewItemHeightConstant);
     }
     for (NSInteger item = 0; item < self.numberOfElemets; item++) {
         indexPath = [NSIndexPath indexPathForItem:item inSection:0];
@@ -84,50 +63,40 @@ SwipeViewAlignment;
         itemAttributes.frame = [self frameForAlbumPhotoAtIndexPath:indexPath];
         cellLayoutInfo[indexPath] = itemAttributes;
     }
-
-    
-    newLayoutInfo[MHCollectionViewLayoutCellKind] = cellLayoutInfo;
-    
+    newLayoutInfo[kMHCollectionViewLayoutCellKind] = cellLayoutInfo;
     self.layoutInfo = newLayoutInfo;
 }
 
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger itemNumber = indexPath.item + self.maxElements/2;
     if(itemNumber == self.numberOfElemets) {
-        itemNumber -=1;
+        itemNumber -= 1;
+    } else if(itemNumber > self.numberOfElemets) {
+        itemNumber = self.numberOfElemets - 1;
     }
     NSIndexPath *newIndex = [NSIndexPath indexPathForItem:itemNumber inSection:indexPath.section];
     [self.delegate currentPage:newIndex.item / self.maxElements];
-    NSLog(@"%ld", (long)newIndex.item);
-    return self.layoutInfo[MHCollectionViewLayoutCellKind][newIndex];
+    
+    return self.layoutInfo[kMHCollectionViewLayoutCellKind][newIndex];
 }
 
 #pragma mark - Private
 
 - (CGRect)frameForAlbumPhotoAtIndexPath:(NSIndexPath *)indexPath {
-    
-    _spacingX = self.itemInsets.left;
+    self.spacingX = self.itemInsets.left;
     CGFloat originX;
     if(indexPath.item >= self.maxElements) {
         NSInteger page = indexPath.item/self.maxElements;
-       originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left + _spacingX * 2 * page;
-        
+        originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left + _spacingX * 2 * page;
     } else {
-    
-    originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left;
+        originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left;
     }
-    CGFloat originY =  self.itemInsets.bottom;
-    NSLog(@"rect1: %@", NSStringFromCGRect(CGRectMake(originX, originY, self.itemSize.width, self.itemSize.height)));
-
+    CGFloat originY = self.itemInsets.bottom;
+    
     return CGRectMake(originX, originY, self.itemSize.width, self.itemSize.height);
 }
 
-//- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {
-//    return YES;
-//}
-
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
-{
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:self.layoutInfo.count];
     
     [self.layoutInfo enumerateKeysAndObjectsUsingBlock:^(NSString *elementIdentifier,
@@ -141,56 +110,39 @@ SwipeViewAlignment;
             }
         }];
     }];
-    
     return allAttributes;
 }
 
-- (CGSize)collectionViewContentSize
-{
-     CGFloat height = CollectionViewHeightConstant;
-    return CGSizeMake(self.numberOfElemets * self.itemSize.width + _spacingX , height);
+- (CGSize)collectionViewContentSize {
+    CGFloat height = kCollectionViewHeightConstant;
+    
+    return CGSizeMake(self.numberOfElemets * self.itemSize.width + self.spacingX , height);
 }
 
-- (void)getMaxNumberOfElements
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+- (void)getMaxNumberOfElements {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         self.alignment = SwipeViewAlignmentCenter;
         self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPhone];
-    }
-    else
-    {
+    } else {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-        {
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
             self.alignment = SwipeViewAlignmentCenter;
             self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadPortrait];
-            
-        }
-        else
-        {
+        } else {
             self.alignment = SwipeViewAlignmentEdge;
             self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadLandscape];
-            
         }
     }
 }
 
-- (NSInteger)getDimentionToGetWidth
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+- (NSInteger)getDimentionToGetWidth {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         return [UIScreen mainScreen].bounds.size.width;
-    }
-    else
-    {
+    } else {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-        {
-             return [UIScreen mainScreen].bounds.size.width;
-        }
-        else
-        {
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+            return [UIScreen mainScreen].bounds.size.width;
+        } else {
             if(self.numberOfElemets > self.maxElements)
                 return [UIScreen mainScreen].bounds.size.width;
             return [UIScreen mainScreen].bounds.size.height;
@@ -198,12 +150,14 @@ SwipeViewAlignment;
     }
 }
 
-- (void)setAlignment:(SwipeViewAlignment)alignment
-{
-    if (_alignment != alignment)
-    {
+- (void)setAlignment:(SwipeViewAlignment)alignment {
+    if (_alignment != alignment) {
         _alignment = alignment;
     }
+}
+
+-(void) dealloc {
+    self.delegate = nil;
 }
 
 @end

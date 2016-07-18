@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MHCollectionViewLayout.h"
 
-@protocol MHMenuVCProtocol <NSObject>
+
+@protocol MHMenuViewControllerDelegate <NSObject>
 
 - (void)didSelectCell:(NSInteger)selectedCell;
 - (void)shouldUpdateHeighOfMenuContainer;
@@ -17,9 +18,9 @@
 @end
 
 
-@interface MHMenuViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, CustomViewFlowLayoutDelegate>
+@interface MHMenuViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MHCollectionViewLayoutDelegate>
 
-@property (weak, nonatomic) id <MHMenuVCProtocol> delegate;
+@property (weak, nonatomic) id <MHMenuViewControllerDelegate> delegate;
 @property (strong, nonatomic) NSArray *arrayOfModels;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pager;
@@ -31,7 +32,7 @@
 @property (assign, nonatomic) BOOL initialScrollDone;
 @property (strong, nonatomic) NSIndexPath *activeIndex;
 
-- (id)init;
+- (id)initWithArray:(NSArray *)array;
 - (void)updateAll;
 
 @end

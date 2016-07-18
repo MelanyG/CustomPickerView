@@ -8,6 +8,7 @@
 
 #import "MHConfigure.h"
 
+
 @interface MHConfigure ()
 
 @property (nonatomic, assign) NSInteger streamPickerItemsPhone;
@@ -26,25 +27,20 @@
 
 @implementation MHConfigure
 
-static MHConfigure *singleton;
+static MHConfigure *kSingleton;
 
 #pragma mark - Init & dealloc methods
 
-+ (MHConfigure *)sharedConfiguration
-{
-    if (singleton == nil)
-    {
-        singleton = [MHConfigure new];
++ (MHConfigure *)sharedConfiguration {
+    if (kSingleton == nil) {
+        kSingleton = [MHConfigure new];
     }
-    
-    return singleton;
+    return kSingleton;
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         self.streamPickerDisplaySplitters = YES;
         self.streamPickerSplitterColor = [UIColor colorWithRed:200.0/255.0 green:200./255.0 blue:200./55.0 alpha:1.0];
         self.streamPickerBackgroundColor = [UIColor colorWithRed:220./255.0 green:220./255.0 blue:220./55.0 alpha:1.0];
@@ -52,10 +48,10 @@ static MHConfigure *singleton;
         self.inactivePageDotColor = [UIColor colorWithRed:170./255.0 green:170./255.0 blue:170./55.0 alpha:1.0];
         self.streamPickerSplitterWidth = 2;
         self.streamPickerItemsPhone = 3;
-        self.streamPickerItemsPadPortrait = 5;
-        self.streamPickerItemsPadLandscape = 7;
+        self.streamPickerItemsPadPortrait = 4;
+        self.streamPickerItemsPadLandscape = 6;
         self.stationID = 159;
-        self.activeStation = 5;
+        self.activeStation = 28;
         self.activeChannelLogoURL = @"http://all4desktop.com/data_images/original/4137373-mickey-mouse-carpet.jpg";
         self.dataSourceArray = [[NSMutableArray alloc]initWithObjects:
                                 @"https://static.pexels.com/photos/1848/nature-sunny-red-flowers.jpg",
@@ -88,38 +84,7 @@ static MHConfigure *singleton;
                                 @"http://all4desktop.com/data_images/original/4137469-the-legend-of-zelda-ocarina-of-time.jpg",
                                 @"http://all4desktop.com/data_images/original/4137479-sunset-maui-hawaiian-island.jpg",
                                 nil];
-//        self.dataSourceArray = [[NSMutableArray alloc]initWithObjects:
-//                                @"Radio - 1",
-//                                @"Radio - 2",
-//                                @"Radio - 3",
-//                                @"Radio - 4",
-//                                @"Radio - 5",
-//                                @"Radio - 6",
-//                                @"Radio - 7",
-//                                @"Radio - 8",
-//                                @"Radio - 9",
-//                                @"Radio - 10",
-//                                @"Radio - 11",
-//                                @"Radio - 12",
-//                                @"Radio - 13",
-//                                @"Radio - 14",
-//                                @"Radio - 15",
-//                                @"Radio - 16",
-//                                @"Radio - 17",
-//                                @"Radio - 18",
-//                                @"Radio - 19",
-//                                @"Radio - 20",
-//                                @"Radio - 21",
-//                                @"Radio - 22",
-//                                @"Radio - 23",
-//                                @"Radio - 24",
-//                                @"Radio - 25",
-//                                @"Radio - 26",
-//                                @"Radio - 27",
-//                                @"Radio - 28",
-//        nil];
         self.numberOfElements = [self.dataSourceArray count];
-
     }
     return self;
 }
