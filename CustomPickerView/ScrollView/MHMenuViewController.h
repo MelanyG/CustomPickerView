@@ -34,5 +34,7 @@
 
 - (id)initWithArray:(NSArray *)array;
 - (void)updateAll;
+- (void)orientationChanged;
+- (void)updateAllWithoutRotation;
 
 @end

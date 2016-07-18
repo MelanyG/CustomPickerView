@@ -32,17 +32,39 @@
                         <constraint firstAttribute="height" constant="80" id="iIJ-mP-ASO"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1B-1G-9A7">
+                    <rect key="frame" x="277" y="207" width="80" height="30"/>
+                    <color key="backgroundColor" red="0.73531197774443036" green="1" blue="0.25885830743697502" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="cQ5-Ta-Wv6"/>
+                        <constraint firstAttribute="height" constant="30" id="i2E-CV-Pfh"/>
+                    </constraints>
+                    <state key="normal" title="Update">
+                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="updateItems:" destination="-1" eventType="touchUpInside" id="yAz-SL-YZ8"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="e1B-1G-9A7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="277" id="HNd-iK-cPI"/>
+                <constraint firstAttribute="trailing" secondItem="e1B-1G-9A7" secondAttribute="trailing" constant="1" id="JEb-5I-Q4V"/>
                 <constraint firstItem="7c2-5C-VZ9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pzt-mA-Q3d"/>
                 <constraint firstAttribute="trailing" secondItem="mgq-Y0-ool" secondAttribute="trailing" id="TZg-g8-K22"/>
                 <constraint firstAttribute="bottom" secondItem="mgq-Y0-ool" secondAttribute="bottom" id="gDn-j7-qhA"/>
                 <constraint firstAttribute="trailing" secondItem="7c2-5C-VZ9" secondAttribute="trailing" id="iYo-kq-MSr"/>
+                <constraint firstItem="e1B-1G-9A7" firstAttribute="top" secondItem="7c2-5C-VZ9" secondAttribute="bottom" constant="63" id="iqB-ll-jz9"/>
                 <constraint firstItem="mgq-Y0-ool" firstAttribute="top" secondItem="7c2-5C-VZ9" secondAttribute="bottom" id="kzY-mm-7Db"/>
                 <constraint firstItem="mgq-Y0-ool" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="t1u-8g-Ydy"/>
                 <constraint firstItem="7c2-5C-VZ9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="x6A-hC-atS"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="JEb-5I-Q4V"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="236" y="367"/>
         </view>
     </objects>

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) WTURLImageViewPreset *preset;
 @property (assign, nonatomic) BOOL rotateIndex;
 @property (strong, nonatomic) NSIndexPath* rotateIndexPath;
+@property (assign, nonatomic) NSInteger numberOfElements;
 
 @end
 
@@ -29,11 +30,12 @@
     self = [super init];
     if (self != nil) {
         self.arrayOfModels = array;
+        self.numberOfElements = [MHConfigure sharedConfiguration].numberOfElements;
         self.view = [[[NSBundle mainBundle] loadNibNamed:@"MHMenuViewController" owner:self options:nil] objectAtIndex:0];
         [self.collectionView registerNib:[UINib nibWithNibName:@"MHMenuCell" bundle:nil] forCellWithReuseIdentifier:@"MenuCell"];
-         self.customLayout.delegate = self;
+        self.customLayout.delegate = self;
         [self.customLayout setup];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
         [self.collectionView setShowsHorizontalScrollIndicator:NO];
         self.initialScrollDone = NO;
         [self setUpWTURLImageView];
@@ -71,7 +73,7 @@
 
 #pragma mark - Notification method
 
-- (void)orientationChanged:(NSNotification *)note {
+- (void)orientationChanged {
     UIDeviceOrientation interfaceOrientation = [[UIDevice currentDevice] orientation];
     if (interfaceOrientation == UIDeviceOrientationLandscapeLeft || interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationPortrait || interfaceOrientation == UIDeviceOrientationPortraitUpsideDown) {
         CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
@@ -89,6 +91,26 @@
     [self updatePageControl];
 }
 
+- (void)updateAllWithoutRotation {
+    self.numberOfElements = [MHConfigure sharedConfiguration].numberOfElements;
+    [self.collectionView reloadData];
+    if(self.activeIndex.item >= self.numberOfElements) {
+        self.activeIndex = [NSIndexPath indexPathForItem:(self.numberOfElements - 1) inSection:self.activeIndex.section];
+    }
+    CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
+    CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
+    self.rotateIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
+    self.rotateIndex = YES;
+    if(self.rotateIndex) {
+        self.rotateIndex = NO;
+        [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+        [self updateAll];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
+            [self.delegate shouldUpdateHeighOfMenuContainer];
+        }
+    }
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -96,7 +118,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.arrayOfModels count];
+    return self.numberOfElements;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

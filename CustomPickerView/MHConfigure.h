@@ -11,9 +11,12 @@
 
 @interface MHConfigure : NSObject
 
-@property (nonatomic, assign, readonly) NSInteger streamPickerItemsPhone;
-@property (nonatomic, assign, readonly) NSInteger streamPickerItemsPadPortrait;
-@property (nonatomic, assign, readonly) NSInteger streamPickerItemsPadLandscape;
+//@property (nonatomic, assign, readonly) NSInteger streamPickerItemsPhone;
+//@property (nonatomic, assign, readonly) NSInteger streamPickerItemsPadPortrait;
+//@property (nonatomic, assign, readonly) NSInteger streamPickerItemsPadLandscape;
+@property (nonatomic, assign) NSInteger streamPickerItemsPhone;
+@property (nonatomic, assign) NSInteger streamPickerItemsPadPortrait;
+@property (nonatomic, assign) NSInteger streamPickerItemsPadLandscape;
 @property (nonatomic, retain, readonly) UIColor *streamPickerBackgroundColor;
 @property (nonatomic, retain, readonly) UIColor *activePageDotColor;
 @property (nonatomic, retain, readonly) UIColor *inactivePageDotColor;

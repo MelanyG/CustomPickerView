@@ -11,9 +11,9 @@
 
 @interface MHConfigure ()
 
-@property (nonatomic, assign) NSInteger streamPickerItemsPhone;
-@property (nonatomic, assign) NSInteger streamPickerItemsPadPortrait;
-@property (nonatomic, assign) NSInteger streamPickerItemsPadLandscape;
+//@property (nonatomic, assign) NSInteger streamPickerItemsPhone;
+//@property (nonatomic, assign) NSInteger streamPickerItemsPadPortrait;
+//@property (nonatomic, assign) NSInteger streamPickerItemsPadLandscape;
 @property (nonatomic, retain) UIColor *streamPickerBackgroundColor;
 @property (nonatomic, retain) UIColor *activePageDotColor;
 @property (nonatomic, retain) UIColor *inactivePageDotColor;
@@ -49,7 +49,7 @@ static MHConfigure *kSingleton;
         self.streamPickerSplitterWidth = 2;
         self.streamPickerItemsPhone = 3;
         self.streamPickerItemsPadPortrait = 4;
-        self.streamPickerItemsPadLandscape = 6;
+        self.streamPickerItemsPadLandscape = 7;
         self.stationID = 159;
         self.activeStation = 28;
         self.activeChannelLogoURL = @"http://all4desktop.com/data_images/original/4137373-mickey-mouse-carpet.jpg";

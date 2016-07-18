@@ -24,6 +24,8 @@ NSString *const kHTTP = @"http";
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightContainerMenuConstraint;
 
+- (IBAction)updateItems:(id)sender;
+
 @end
 
 
@@ -46,11 +48,21 @@ NSString *const kHTTP = @"http";
 #pragma mark - UpdateMenuController
 
 - (void)updateMenuController {
+    //self.menuViewController.arrayOfModels = [self createArrayOfModels];
     self.menuViewController.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
     self.menuViewController.inactivePageDotColor = [[MHConfigure sharedConfiguration]inactivePageDotColor];
     self.menuViewController.activePageDotColor = [[MHConfigure sharedConfiguration]activePageDotColor];
     self.menuViewController.activeIndex = [NSIndexPath indexPathForItem:[[MHConfigure sharedConfiguration]activeStation] inSection:0];
     [self.menuViewController updateAll];
+    [self shouldUpdateHeighOfMenuContainer];
+}
+- (void)updateMenuControllerWithoutRotation {
+    self.menuViewController.arrayOfModels = [self createArrayOfModels];
+    self.menuViewController.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerBackgroundColor];
+    self.menuViewController.inactivePageDotColor = [[MHConfigure sharedConfiguration]inactivePageDotColor];
+    self.menuViewController.activePageDotColor = [[MHConfigure sharedConfiguration]activePageDotColor];
+    self.menuViewController.activeIndex = [NSIndexPath indexPathForItem:[[MHConfigure sharedConfiguration]activeStation] inSection:0];
+    [self.menuViewController updateAllWithoutRotation];
     [self shouldUpdateHeighOfMenuContainer];
 }
 
@@ -70,7 +82,7 @@ NSString *const kHTTP = @"http";
         self.heightContainerMenuConstraint.constant = kVisiblePagerConstant;
     }
     [self.view setNeedsUpdateConstraints];
- }
+}
 
 #pragma mark - Navigation methods
 
@@ -137,4 +149,16 @@ NSString *const kHTTP = @"http";
 }
 
 
+- (IBAction)updateItems:(id)sender {
+    NSInteger randomAllNumbers = arc4random() % 10;
+    if([MHConfigure sharedConfiguration].streamPickerItemsPadPortrait > 1)
+        [MHConfigure sharedConfiguration].streamPickerItemsPadPortrait -= 1;
+    if([MHConfigure sharedConfiguration].streamPickerItemsPadLandscape > 1)
+        [MHConfigure sharedConfiguration].streamPickerItemsPadLandscape -= 1;
+    if(([MHConfigure sharedConfiguration].numberOfElements - randomAllNumbers) > 1 )
+        [MHConfigure sharedConfiguration].numberOfElements -= randomAllNumbers;
+    
+    [self updateMenuControllerWithoutRotation];
+    //[self.menuViewController.view layoutSubviews];
+}
 @end
