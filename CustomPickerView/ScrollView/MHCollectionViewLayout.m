@@ -93,8 +93,12 @@ SwipeViewAlignment;
 
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger itemNumber = indexPath.item + self.maxElements/2;
+    if(itemNumber == self.numberOfElemets) {
+        itemNumber -=1;
+    }
     NSIndexPath *newIndex = [NSIndexPath indexPathForItem:itemNumber inSection:indexPath.section];
     [self.delegate currentPage:indexPath.item / self.maxElements];
+    NSLog(@"%ld", (long)newIndex.item);
     return self.layoutInfo[MHCollectionViewLayoutCellKind][newIndex];
 }
 
@@ -105,7 +109,7 @@ SwipeViewAlignment;
     _spacingX = self.itemInsets.left;
     CGFloat originX;
     if(indexPath.item >= self.maxElements) {
-        int page = indexPath.item/self.maxElements;
+        NSInteger page = indexPath.item/self.maxElements;
        originX = floorf((self.itemSize.width) * indexPath.item) + self.itemInsets.left + _spacingX * 2 * page;
         
     } else {
