@@ -137,7 +137,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MHMenuCell *cell = (MHMenuCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
+    cell.imageContainer.highlighted = NO;
     [self collectionView:collectionView didDeselectItemAtIndexPath:self.activeIndex];
     MHMenuModelItem *modelItem = self.arrayOfModels[indexPath.item];
     
