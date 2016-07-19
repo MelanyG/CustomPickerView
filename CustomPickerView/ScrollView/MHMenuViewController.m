@@ -52,12 +52,7 @@
         }
     }
     if(self.rotateIndex) {
-        self.rotateIndex = NO;
-        [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
-        [self updateAll];
-        if(self.delegate && [self.delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
-            [self.delegate shouldUpdateHeighOfMenuContainer];
-        }
+        [self moveToItem];
     }
 }
 
@@ -102,12 +97,7 @@
     self.rotateIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
     self.rotateIndex = YES;
     if(self.rotateIndex) {
-        self.rotateIndex = NO;
-        [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
-        [self updateAll];
-        if(self.delegate && [self.delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
-            [self.delegate shouldUpdateHeighOfMenuContainer];
-        }
+        [self moveToItem];
     }
 }
 
@@ -246,5 +236,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Private methods
+
+- (void)moveToItem {
+    self.rotateIndex = NO;
+    [self.collectionView scrollToItemAtIndexPath:self.rotateIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+    [self updateAll];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(shouldUpdateHeighOfMenuContainer)]) {
+        [self.delegate shouldUpdateHeighOfMenuContainer];
+    }
+
+}
 
 @end
