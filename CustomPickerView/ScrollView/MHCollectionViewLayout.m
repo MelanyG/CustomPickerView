@@ -13,6 +13,8 @@
 static NSString * const kMHCollectionViewLayoutCellKind = @"MenuCell";
 static CGFloat const kCollectionViewHeightConstant = 44.f;
 static CGFloat const kCollectionViewItemHeightConstant = 34.f;
+static CGFloat const kCollectionViewItemHeightConstantForBottomAlignment = 38.f;
+
 
 
 @interface MHCollectionViewLayout ()
@@ -39,6 +41,9 @@ static CGFloat const kCollectionViewItemHeightConstant = 34.f;
     NSMutableDictionary *newLayoutInfo = [NSMutableDictionary dictionary];
     NSMutableDictionary *cellLayoutInfo = [NSMutableDictionary dictionary];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    //for case 2
+    self.itemInsets = UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
+    //
     self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
     [self getMaxNumberOfElements];
     NSInteger dimension = [self getDimentionToGetWidth];
@@ -48,13 +53,19 @@ static CGFloat const kCollectionViewItemHeightConstant = 34.f;
         CGFloat originX = ([UIScreen mainScreen].bounds.size.width - width * self.maxElements) / 2;
         self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 5.0f, 5.0f);
     } else  {
-        self.itemSize = CGSizeMake(([[UIScreen mainScreen] bounds].size.width- self.itemInsets.left*2)/self.numberOfElemets, kCollectionViewItemHeightConstant);
+        //case 1 - define width on the basis of whole screen width
+       // self.itemSize = CGSizeMake(([[UIScreen mainScreen] bounds].size.width - self.itemInsets.left*2)/self.numberOfElemets, kCollectionViewItemHeightConstant);
+        
+       // case 2 - define width on the basis of whole screen height
+        self.itemSize = CGSizeMake((dimension - self.itemInsets.left*2)/self.numberOfElemets, kCollectionViewItemHeightConstant);
+        self.itemInsets = UIEdgeInsetsMake(0.0f, ([[UIScreen mainScreen] bounds].size.width - self.itemSize.width * self.numberOfElemets)/2 , 5.0f, 5.0f);
     }
     
     switch (self.alignment) {
         case MHMenuItemAlignmentBottom:
         {
-            self.itemInsets = UIEdgeInsetsMake(0.0f, self.itemInsets.left, 10.0f, self.itemInsets.right);
+            self.itemSize = CGSizeMake(self.itemSize.width, kCollectionViewItemHeightConstantForBottomAlignment);
+            self.itemInsets = UIEdgeInsetsMake(0.0f, self.itemInsets.left, 6.0f, self.itemInsets.right);
             break;
         }
         case MHMenuItemAlignmentCenter:
@@ -126,8 +137,8 @@ static CGFloat const kCollectionViewItemHeightConstant = 34.f;
 }
 
 - (CGSize)collectionViewContentSize {
-    CGFloat height = kCollectionViewHeightConstant;
-    
+    CGFloat height = kCollectionViewHeightConstant;;
+
     return CGSizeMake(self.numberOfElemets * self.itemSize.width + self.spacingX , height);
 }
 
@@ -152,7 +163,7 @@ static CGFloat const kCollectionViewItemHeightConstant = 34.f;
         if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
             return [UIScreen mainScreen].bounds.size.width;
         } else {
-            if(self.numberOfElemets > self.maxElements)
+            if(self.numberOfElemets >= self.maxElements)
                 return [UIScreen mainScreen].bounds.size.width;
             return [UIScreen mainScreen].bounds.size.height;
         }

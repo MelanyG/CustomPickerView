@@ -52,8 +52,8 @@ static MHConfigure *kSingleton;
         self.streamPickerItemsPadPortrait = 5;
         self.streamPickerItemsPadLandscape = 7;
         self.stationID = 159;
-        self.activeStation = 2;
-        self.streamPickerItemAlignment = MHMenuItemAlignmentCenter;
+        self.activeStation = 0;
+        self.streamPickerItemAlignment = MHMenuItemAlignmentBottom;
         self.activeChannelLogoURL = @"http://all4desktop.com/data_images/original/4137373-mickey-mouse-carpet.jpg";
         self.dataSourceArray = [[NSMutableArray alloc]initWithObjects:
                                 @"https://static.pexels.com/photos/1848/nature-sunny-red-flowers.jpg",
