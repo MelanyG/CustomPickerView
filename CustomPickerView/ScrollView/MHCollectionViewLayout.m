@@ -11,19 +11,13 @@
 
 
 static NSString * const kMHCollectionViewLayoutCellKind = @"MenuCell";
-static CGFloat const kCollectionViewHeightConstant = 60.f;
-static CGFloat const kCollectionViewItemHeightConstant = 50.f;
-
-typedef enum {
-    SwipeViewAlignmentEdge = 0,
-    SwipeViewAlignmentCenter
-}
-SwipeViewAlignment;
+static CGFloat const kCollectionViewHeightConstant = 44.f;
+static CGFloat const kCollectionViewItemHeightConstant = 34.f;
 
 
 @interface MHCollectionViewLayout ()
 
-@property (nonatomic, assign) SwipeViewAlignment alignment;
+@property (nonatomic, assign) MHMenuItemAlignment alignment;
 @property (nonatomic, strong) NSDictionary *layoutInfo;
 
 @end
@@ -38,6 +32,7 @@ SwipeViewAlignment;
     self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/3, kCollectionViewItemHeightConstant);
     [self getMaxNumberOfElements];
     self.numberOfElemets = [self.collectionView numberOfItemsInSection:0];
+    self.alignment = [MHConfigure sharedConfiguration].streamPickerItemAlignment;
 }
 
 - (void)prepareLayout {
@@ -53,8 +48,25 @@ SwipeViewAlignment;
         CGFloat originX = ([UIScreen mainScreen].bounds.size.width - width * self.maxElements) / 2;
         self.itemInsets = UIEdgeInsetsMake(0.0f, originX, 5.0f, 5.0f);
     } else  {
-        self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width/self.numberOfElemets - self.itemInsets.left*2, kCollectionViewItemHeightConstant);
+        self.itemSize = CGSizeMake(([[UIScreen mainScreen] bounds].size.width- self.itemInsets.left*2)/self.numberOfElemets, kCollectionViewItemHeightConstant);
     }
+    
+    switch (self.alignment) {
+        case MHMenuItemAlignmentBottom:
+        {
+            self.itemInsets = UIEdgeInsetsMake(0.0f, self.itemInsets.left, 10.0f, self.itemInsets.right);
+            break;
+        }
+        case MHMenuItemAlignmentCenter:
+        {
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    
     for (NSInteger item = 0; item < self.numberOfElemets; item++) {
         indexPath = [NSIndexPath indexPathForItem:item inSection:0];
         
@@ -121,15 +133,12 @@ SwipeViewAlignment;
 
 - (void)getMaxNumberOfElements {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        self.alignment = SwipeViewAlignmentCenter;
         self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPhone];
     } else {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
-            self.alignment = SwipeViewAlignmentCenter;
             self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadPortrait];
         } else {
-            self.alignment = SwipeViewAlignmentEdge;
             self.maxElements = [[MHConfigure sharedConfiguration]streamPickerItemsPadLandscape];
         }
     }
@@ -150,7 +159,7 @@ SwipeViewAlignment;
     }
 }
 
-- (void)setAlignment:(SwipeViewAlignment)alignment {
+- (void)setAlignment:(MHMenuItemAlignment)alignment {
     if (_alignment != alignment) {
         _alignment = alignment;
     }

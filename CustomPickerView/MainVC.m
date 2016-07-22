@@ -12,8 +12,8 @@
 #import "MHMenuModelItem.h"
 
 
-CGFloat const kInvisiblePagerConstant = 60.f;
-CGFloat const kVisiblePagerConstant = 80.f;
+CGFloat const kInvisiblePagerConstant = 44.f;
+CGFloat const kVisiblePagerConstant = 64.f;
 NSString *const kHTTP = @"http";
 
 
@@ -151,13 +151,13 @@ NSString *const kHTTP = @"http";
 
 - (IBAction)updateItems:(id)sender {
     NSInteger randomAllNumbers = arc4random() % 10;
-    if([MHConfigure sharedConfiguration].streamPickerItemsPadPortrait > 1)
-        [MHConfigure sharedConfiguration].streamPickerItemsPadPortrait -= 1;
-    if([MHConfigure sharedConfiguration].streamPickerItemsPadLandscape > 1)
-        [MHConfigure sharedConfiguration].streamPickerItemsPadLandscape -= 1;
-    if(([MHConfigure sharedConfiguration].numberOfElements - randomAllNumbers) > 1 )
-        [MHConfigure sharedConfiguration].numberOfElements -= randomAllNumbers;
-    
+//    if([MHConfigure sharedConfiguration].streamPickerItemsPadPortrait > 1)
+//        [MHConfigure sharedConfiguration].streamPickerItemsPadPortrait -= 1;
+//    if([MHConfigure sharedConfiguration].streamPickerItemsPadLandscape > 1)
+//        [MHConfigure sharedConfiguration].streamPickerItemsPadLandscape -= 1;
+//    if(([MHConfigure sharedConfiguration].numberOfElements - randomAllNumbers) > 1 )
+//        [MHConfigure sharedConfiguration].numberOfElements -= randomAllNumbers;
+//    
     [self updateMenuControllerWithoutRotation];
     //[self.menuViewController.view layoutSubviews];
 }

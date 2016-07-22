@@ -22,6 +22,7 @@
     }
     if ([MHConfigure sharedConfiguration].streamPickerDisplaySplitters) {
         self.splitter.hidden = NO;
+        self.widthOfSplitterConstraint.constant = [MHConfigure sharedConfiguration].streamPickerSplitterWidth;
         self.splitter.backgroundColor = [[MHConfigure sharedConfiguration]streamPickerSplitterColor];
     }
 }

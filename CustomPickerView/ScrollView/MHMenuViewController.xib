@@ -19,11 +19,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" delaysContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="XYP-xB-M1w">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="hzP-cB-ouJ">
-                            <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                        <constraint firstAttribute="height" constant="44" id="hzP-cB-ouJ">
+                            <variation key="heightClass=regular-widthClass=regular" constant="44"/>
                         </constraint>
                     </constraints>
                     <collectionViewLayout key="collectionViewLayout" id="beV-74-VJ9" customClass="MHCollectionViewLayout"/>
@@ -43,7 +43,7 @@
                     </connections>
                 </collectionView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cMa-V8-LnR">
-                    <rect key="frame" x="0.0" y="60" width="414" height="20"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="20"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Z6W-YL-x3b">

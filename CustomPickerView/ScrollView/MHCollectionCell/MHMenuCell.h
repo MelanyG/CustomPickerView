@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet WTURLImageView *imageContainer;
 @property (weak, nonatomic) IBOutlet UIView *splitter;
 @property (weak, nonatomic) IBOutlet UILabel *textLable;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthOfSplitterConstraint;
 
 - (void)setVisibleSplitter:(NSInteger)index;
 

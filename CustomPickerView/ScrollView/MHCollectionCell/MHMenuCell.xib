@@ -23,11 +23,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="206" height="138"/>
                     </imageView>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pwr-57-YLF">
-                        <rect key="frame" x="0.0" y="5" width="2" height="128"/>
+                        <rect key="frame" x="0.0" y="47" width="2" height="44"/>
                         <color key="backgroundColor" red="1" green="0.89506722230000002" blue="0.3011343755" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="2" id="W01-ac-iTo"/>
-                            <constraint firstAttribute="height" constant="128" id="tfL-qV-KJS"/>
+                            <constraint firstAttribute="height" constant="44" id="tfL-qV-KJS"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -50,6 +50,7 @@
                 <outlet property="imageContainer" destination="cLl-mk-lTe" id="XLc-FD-Pe4"/>
                 <outlet property="splitter" destination="Pwr-57-YLF" id="vov-pu-HHn"/>
                 <outlet property="textLable" destination="bUr-D5-RfY" id="mFs-fg-CPx"/>
+                <outlet property="widthOfSplitterConstraint" destination="W01-ac-iTo" id="4dx-Od-cc5"/>
             </connections>
             <point key="canvasLocation" x="110" y="298"/>
         </collectionViewCell>
