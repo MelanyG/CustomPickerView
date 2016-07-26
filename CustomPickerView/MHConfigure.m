@@ -62,11 +62,11 @@ static MHConfigure *kSingleton;
                                 @"http://all4desktop.com/data_images/original/4140623-fire-beach.jpg",
                                 @"http://all4desktop.com/data_images/original/4140642-white-horse.jpg",
                                 @"http://all4desktop.com/data_images/original/4140648-crisis.jpg",
-//                                @"http://all4desktop.com/data_images/original/4140581-nature-sail.jpg",
-//                                @"http://all4desktop.com/data_images/original/4140660-nfs-rivals.jpg",
-//                                @"http://all4desktop.com/data_images/original/4140669-far-cry-4-dead-tiger.jpg",
-//                                @"http://all4desktop.com/data_images/original/4140606-lake-louise-reflections.jpg",
-//                                @"http://all4desktop.com/data_images/original/4140722-wooden-path.jpg",
+                                @"http://all4desktop.com/data_images/original/4140581-nature-sail.jpg",
+                                @"http://all4desktop.com/data_images/original/4140660-nfs-rivals.jpg",
+                                @"http://all4desktop.com/data_images/original/4140669-far-cry-4-dead-tiger.jpg",
+                                @"http://all4desktop.com/data_images/original/4140606-lake-louise-reflections.jpg",
+                                @"http://all4desktop.com/data_images/original/4140722-wooden-path.jpg",
 //                                @"Radio - 1",
 //                                @"http://all4desktop.com/data_images/original/4140678-icelands-ring-road.jpg",
 //                                @"http://all4desktop.com/data_images/original/4140765-diver-and-the-mermaid.jpg",
@@ -86,6 +86,7 @@ static MHConfigure *kSingleton;
 //                                @"http://all4desktop.com/data_images/original/4137469-the-legend-of-zelda-ocarina-of-time.jpg",
 //                                @"http://all4desktop.com/data_images/original/4137479-sunset-maui-hawaiian-island.jpg",
                                 nil];
+        self.accessibilityArray = @[@"Flowers", @"Raven", @"Horse", @"Fire beach", @"White horse", @"Crisis", @"Nature sail", @"Rivals", @"Dead Tiger", @"Lake louise reflections", @"Wooden path"];
         self.numberOfElements = [self.dataSourceArray count];
     }
     return self;

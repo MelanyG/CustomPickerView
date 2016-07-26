@@ -143,6 +143,7 @@ NSString *const kHTTP = @"http";
             item.textForLable = [MHConfigure sharedConfiguration].dataSourceArray[i];
         }
         item.stationID = [[MHConfigure sharedConfiguration]stationID];
+        item.accessibilityText = [[MHConfigure sharedConfiguration]accessibilityArray][i];
         arrayOfModels[i] = item;
     }
     return arrayOfModels;

@@ -131,7 +131,8 @@
         }
     }
     [cell setVisibleSplitter:indexPath.item];
-    
+    cell.accessibilityText = modelItem.accessibilityText;
+
     return cell;
 }
 

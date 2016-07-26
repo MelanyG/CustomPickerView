@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSString *activeThumbnnailUrl;
 @property (strong, nonatomic) NSString *inActiveThumbnnailUrl;
 @property (strong, nonatomic) NSString *textForLable;
+@property (strong, nonatomic) NSString *accessibilityText;
 
 @end

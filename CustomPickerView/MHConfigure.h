@@ -38,6 +38,7 @@ typedef NS_ENUM (NSInteger, MHMenuItemAlignment)
 @property (strong, nonatomic) NSString *activeChannelLogoURL;
 @property (assign, nonatomic) NSInteger stationID;
 @property (assign, nonatomic) NSInteger activeStation;
+@property (strong, nonatomic) NSArray *accessibilityArray;
 
 + (MHConfigure *)sharedConfiguration;
 

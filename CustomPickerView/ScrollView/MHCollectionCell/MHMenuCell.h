@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *splitter;
 @property (weak, nonatomic) IBOutlet UILabel *textLable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthOfSplitterConstraint;
+@property (strong, nonatomic) NSString *accessibilityText;
 
 - (void)setVisibleSplitter:(NSInteger)index;
 

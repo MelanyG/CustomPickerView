@@ -34,4 +34,19 @@
 }
 
 
+#pragma mark - Accessibility methods
+
+- (BOOL)isAccessibilityElement {
+    return YES;
+}
+
+- (NSString *)accessibilityHint {
+    return NSLocalizedString(@"Double tap to open", nil);
+}
+
+- (NSString *)accessibilityLabel {
+    return NSLocalizedString(self.accessibilityText, nil);
+}
+
+
 @end
